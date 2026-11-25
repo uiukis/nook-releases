@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "repository": "uiukis/nook-releases",
+  "tag": "v0.11.1-beta",
+  "releaseUrl": "https://github.com/uiukis/nook-releases/releases/tag/v0.11.1-beta",
+  "publishedAt": "2026-11-25T11:48:30Z",
+  "checksums": "https://github.com/uiukis/nook-releases/releases/download/v0.11.1-beta/SHA256SUMS.txt",
+  "macos": {
+    "version": "0.11.0-beta",
+    "download": "https://github.com/uiukis/nook-releases/releases/download/v0.11.1-beta/Nook-macOS.dmg",
+    "sha256": "4df09659f7f4ad0b725d7bc837aad2d746dd7e77b0eab5ef8a6fd1713dfb1905"
+  },
+  "windows": {
+    "version": "0.11.1-beta",
+    "x64": "https://github.com/uiukis/nook-releases/releases/download/v0.11.1-beta/Nook-win-x64-Setup.exe",
+    "arm64": "https://github.com/uiukis/nook-releases/releases/download/v0.11.1-beta/Nook-win-arm64-Setup.exe",
+    "sha256": {
+      "x64": "ef9aa804b932e0d01255460c977aaa774c67af53f9c62b66da045ad9e8a71d6a",
+      "arm64": "1f6590122c45edd5e8ecf3b5de6d189599eb41fdfdb8cafa8452e62eb258806d"
+    }
+  }
+}

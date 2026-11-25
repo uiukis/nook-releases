@@ -36,7 +36,9 @@ Para atualizar, encerre o Nook antes de substituir a cópia em Aplicativos. Esta
 
 ## Sobre este repositório
 
-Este repositório contém apenas os instaladores, as notas de versão e a documentação pública do Nook. O código-fonte do aplicativo é privado. Publicar os instaladores não torna o Nook um projeto de código aberto.
+Este repositório reúne os instaladores, notas de versão, documentação e o [site público](site/README.md). O código-fonte dos aplicativos macOS e Windows continua privado. A demonstração do site usa dados de exemplo e não executa comandos no computador de quem visita.
+
+O site é publicado a partir de `main`, na pasta `site`. Ao publicar ou editar uma release, o workflow **Sync release downloads** atualiza os links e versões disponíveis. O processo é descrito em [site/README.md](site/README.md).
 
 Encontrou um problema? [Abra uma issue](https://github.com/uiukis/nook-releases/issues), informando a versão do Nook, o sistema e como reproduzir. Não inclua senhas, credenciais ou arquivos pessoais.
 

@@ -1,0 +1,21 @@
+{
+  "name": "nook-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "test": "node --test scripts/release-data.test.mjs",
+    "sync-releases": "node scripts/sync-releases.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "lucide-react": "1.69.0",
+    "motion": "14.9.1",
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}
