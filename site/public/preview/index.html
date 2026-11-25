@@ -78,11 +78,14 @@ html.embed, .embed body { margin: 0; overflow: hidden; }
 .embed .desktop-scene::before { background: linear-gradient(130deg, #39354d, #58546c); }
 .embed .desktop-scene::after { background: linear-gradient(120deg, #736584, #49425d); }
 .embed .mac-menubar { color:#e4dced8c; background:#0a090d26; }
+.embed #settingsDialog, .embed #nibDialog { margin:12px auto auto; }
+.embed .settings-window { height:min(570px,calc(100dvh - 88px)); }
+.embed .nib-window { max-height:calc(100dvh - 88px); overflow:auto; }
 @media (max-width: 480px) {
   .embed #settingsDialog { max-width: none; max-height: none; }
   .embed .settings-window {
     width: calc(100vw - 16px);
-    height: calc(100dvh - 16px);
+    height: calc(100dvh - 88px);
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
   }

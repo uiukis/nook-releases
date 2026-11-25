@@ -2,7 +2,7 @@ import './site.css';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 export const metadata = {
-  metadataBase: new URL('https://nook-notch.vercel.app'),
+  metadataBase: new URL('https://nook-notch-beta.vercel.app'),
   title: 'Nook — Um pequeno espaço. Pra muita coisa.',
   description: 'Música, arquivos, cotas e agentes de IA no seu notch. Experimente todas as funcionalidades e baixe a beta pública para macOS ou Windows.',
   icons: { icon: basePath + '/nook.svg' },

@@ -12,7 +12,7 @@ npm ci
 npm run dev
 ```
 
-`npm test` verifica a seleção de downloads. `npm run build` gera o site estático em `out/`. A Vercel usa o framework Next.js e a pasta raiz `site`, com publicação de `main`. O workflow **Site** verifica testes e build sem consumir armazenamento de artefatos do GitHub.
+`npm test` verifica a seleção de downloads. `npm run build` gera o site estático em `out/`. O projeto Vercel `nook-site` usa o framework Next.js e a pasta raiz `site`, com publicação de `main` em <https://nook-notch-beta.vercel.app/>. O workflow **Site** verifica testes e build sem consumir armazenamento de artefatos do GitHub.
 
 ## Publicar versões
 
