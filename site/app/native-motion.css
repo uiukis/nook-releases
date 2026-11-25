@@ -1,0 +1,17 @@
+.scroll-notch{width:min(740px,calc(100vw - 24px));height:var(--open-height,320px)}
+.notch-arrival{position:absolute;inset:0;opacity:0;will-change:transform,opacity}.notch-mask-defs{position:absolute;width:0;height:0;overflow:visible}
+.scroll-notch .notch-surface{clip-path:url(#nook-surface-clip);background:#000;will-change:auto;border:0;box-shadow:none}
+.scroll-notch[data-presence=hidden]{pointer-events:none;visibility:hidden}.scroll-notch[data-presence=leaving]{pointer-events:none}
+.scroll-notch .demo-frame{opacity:0;height:100%;width:100%;background:transparent}
+.scroll-notch[data-overlay=true] .notch-surface{clip-path:none;background:transparent}
+.scroll-notch[data-overlay=true] .demo-frame{position:absolute;left:var(--overlay-left);top:0;width:var(--overlay-width);height:var(--overlay-height)}
+.scroll-notch[data-overlay=true] .notch-tools,.scroll-notch[data-overlay=true] .notch-resident{visibility:hidden;pointer-events:none}
+.closed-face{width:min(360px,100%);height:36px;padding:0 14px 0 17px;border:0;border-radius:0;background:transparent;justify-content:space-between;gap:18px;font-family:Instrument,Arial,sans-serif}
+.closed-label{display:flex;align-items:center;gap:12px;min-width:0}.closed-label strong{font-family:Bricolage,Instrument,sans-serif;font-size:14px;font-weight:750}.closed-context{font-size:10px;color:#a6a0b3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.closed-nib{display:block;width:25px;height:25px;flex-shrink:0}
+.scroll-notch .notch-resident{right:calc(max(66px,74px * var(--native-fit,1)) - 22px);top:calc(21.5px * var(--native-fit,1) - 22px);width:44px;height:44px}.scroll-notch .notch-resident>span{width:calc(28px * var(--native-fit,1));height:calc(28px * var(--native-fit,1))}
+.notch-tools{inset:0;height:auto;border:0;pointer-events:none}.notch-context,.notch-count{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.notch-tools button{position:absolute;pointer-events:auto}.notch-tools [data-command=settings]{right:calc(max(22px,30px * var(--native-fit,1)) - 22px);top:calc(21.5px * var(--native-fit,1) - 22px);height:44px;width:44px}.notch-tools [data-command=settings] svg{width:calc(17px * var(--native-fit,1));height:calc(17px * var(--native-fit,1))}.notch-tools [data-command=toggle]{right:0;bottom:0;height:30px;width:40px;color:#93909d}
+.scroll-notch[data-mode=closed] .notch-tools button{pointer-events:none}.scroll-notch[data-mode=closed] .notch-tools{opacity:0}
+.download-dialog::backdrop{background:rgb(0 0 0 / var(--nook-backdrop,.55))}
+@media(max-width:760px){.scroll-story .site-header{height:90px;padding-top:0}.notch-tools [data-command=toggle]{height:23px;width:32px}.closed-label{gap:10px}.closed-context{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.notch-arrival{will-change:auto}}

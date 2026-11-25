@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ArrowDown, ArrowRight, Apple, ChevronUp, Download, Monitor, Settings2, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, Apple, ChevronUp, Download, Monitor, Settings, X } from 'lucide-react';
 import features from './story-features.json';
 import { mountStory } from './scroll-controller';
 import { NibGlyph } from './nib';
@@ -25,14 +25,17 @@ function DownloadButton({children = 'Baixar a beta', className = 'button'}) {
 }
 
 function TopNotch({basePath}) {
-  return <aside className="scroll-notch" aria-label="Nook no topo da página" data-mode="closed" data-docked="false"><div className="notch-surface">
+  return <aside className="scroll-notch" aria-label="Nook no topo da página" data-mode="closed" data-docked="false" data-presence="hidden" aria-hidden="true" inert><div className="notch-arrival">
+    <svg className="notch-mask-defs" aria-hidden="true"><defs><clipPath id="nook-surface-clip" clipPathUnits="userSpaceOnUse"><path className="notch-outline" /></clipPath></defs></svg>
+    <div className="notch-surface">
     <iframe className="demo-frame" src={basePath + '/preview/?embed=1#music'} title="Prévia interativa do recurso atual do Nook" inert aria-hidden="true" />
     <div className="notch-tools" role="group" aria-label="Controles do notch"><span className="notch-context" aria-live="polite">Música</span><span className="notch-count">1 / 9</span>
-      <button type="button" data-command="settings" aria-label="Abrir configurações" tabIndex={-1}><Settings2 size={17} aria-hidden="true" /></button>
+      <button type="button" data-command="settings" aria-label="Abrir configurações" tabIndex={-1}><Settings size={17} aria-hidden="true" /></button>
       <button type="button" data-command="toggle" aria-label="Recolher o notch" tabIndex={-1}><ChevronUp size={17} aria-hidden="true" /></button>
     </div>
     <button className="notch-resident" type="button" data-command="nib" aria-label="Conhecer o Nib" tabIndex={-1}><span><NibGlyph /></span></button>
-    <button className="closed-face" type="button" aria-label="Explorar o Nook no notch" aria-expanded="false"><span>Nook</span><span className="closed-camera" /><span className="closed-nib"><NibGlyph /></span></button>
+    <button className="closed-face" type="button" aria-label="Explorar o Nook no notch" aria-expanded="false"><span className="closed-label"><strong>Nook</strong><small className="closed-context">Seu dia, por perto.</small></span><span className="closed-nib"><NibGlyph /></span></button>
+    </div>
   </div></aside>;
 }
 
