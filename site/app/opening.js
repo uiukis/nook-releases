@@ -1,4 +1,5 @@
-// HyperFrames renders the logo/jump to MP4; this joins its last frame to the live page.
+import {NookMotion} from './nook-motion';
+// The same seekable timelines are authored and reviewed in HyperFrames.
 export function runIntro({gsap, home, traveler, reduced, onDone}) {
   const overlay=document.querySelector('.intro-overlay');
   const video=overlay.querySelector('video');
@@ -7,7 +8,7 @@ export function runIntro({gsap, home, traveler, reduced, onDone}) {
   const media=matchMedia('(prefers-reduced-motion: reduce)');
   const previousOverflow=document.body.style.overflow;
   let finished=false,disposed=false,timer=null,assembly=null;
-  const targets=['.site-header','.hero-copy','.hero-nib-scene','.scroll-notch'];
+  const elements={header:'.site-header',copy:'.hero-copy',stage:'.hero-nib-scene',notch:'.scroll-notch',home,traveler,video,overlay};
   const context=gsap.context(()=>{});
 
   const release=()=>{content.inert=false;document.body.style.overflow=previousOverflow;};
@@ -27,18 +28,11 @@ export function runIntro({gsap, home, traveler, reduced, onDone}) {
     document.body.dataset.intro='assembling';
     const target=home.getBoundingClientRect();
     // Intrinsic coordinates are shared with nook-intro/compositions/brand.html.
-    const scale=Math.min(innerWidth/1920,innerHeight/1080);
-    const from={x:(innerWidth-1920*scale)/2+1280*scale,y:(innerHeight-1080*scale)/2+615*scale};
+    const {width,height,landing}=NookMotion.intro;
+    const scale=Math.min(innerWidth/width,innerHeight/height);
+    const from={x:(innerWidth-width*scale)/2+landing.x*scale,y:(innerHeight-height*scale)/2+landing.y*scale};
     context.add(()=>{
-      assembly=gsap.timeline({onComplete:complete});
-      assembly.set(traveler,{x:from.x,y:from.y,scale:96*scale/80,rotation:0,opacity:1,transformOrigin:'0 0'},0);
-      assembly.to(video,{opacity:0,duration:.16,ease:'power1.out'},0);
-      assembly.to(overlay,{opacity:0,duration:.35,ease:'power2.out'},.04);
-      assembly.to('.hero-nib-scene',{opacity:1,clipPath:'inset(0% 0% 0% 0% round 29px)',duration:.7,ease:'power3.inOut'},.08);
-      assembly.to('.hero-copy',{opacity:1,clipPath:'inset(0% 0% 0% 0%)',duration:.55,ease:'power3.out'},.2);
-      assembly.to('.site-header',{opacity:1,y:0,duration:.4,ease:'power2.out'},.27);
-      assembly.to('.scroll-notch',{opacity:1,duration:.3},.4);
-      assembly.to(traveler,{motionPath:{path:[from,{x:from.x+35,y:from.y-70},{x:target.left-35,y:target.top-50},{x:target.left,y:target.top}],curviness:1.05},scale:target.width/80,duration:.9,ease:'power2.inOut'},.02);
+      assembly=NookMotion.assemble(gsap,elements,{from,target,scale});assembly.timeScale(1.3).eventCallback('onComplete',complete).play(0);
     });
   }
   const skipIntro=()=>finish(false);
@@ -56,10 +50,7 @@ export function runIntro({gsap, home, traveler, reduced, onDone}) {
     overlay.hidden=false;content.inert=true;document.body.style.overflow='hidden';
     document.body.dataset.intro='playing';overlay.dataset.introState='playing';
     context.add(()=>{
-      gsap.set('.site-header',{opacity:0,y:-14});
-      gsap.set('.hero-copy',{opacity:0,clipPath:'inset(0% 100% 0% 0%)'});
-      gsap.set('.hero-nib-scene',{opacity:0,clipPath:'inset(74% 10% 0% 70% round 29px)'});
-      gsap.set('.scroll-notch',{opacity:0});gsap.set(home,{opacity:0});
+      NookMotion.prepareAssembly(gsap,elements);
     });
     video.src=video.dataset.src;video.load();
     timer=setTimeout(skipIntro,7000);

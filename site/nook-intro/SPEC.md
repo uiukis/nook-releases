@@ -1,14 +1,14 @@
-# Nook — abertura do site
+# Nook — abertura curta
 
-Vídeo silencioso de 2,8 segundos, 1920 × 1080 a 30 fps, fundo #151618. Marca real do Nook, Bricolage Grotesque e lilás #d6c5f6. A composição cabe no centro para continuar legível no celular com object-fit: contain.
+Vídeo silencioso de 1,6 segundo, 1920 × 1080 a 60 fps. Fundo #151618, logo original, Bricolage Grotesque e lilás #d6c5f6.
 
-- 0–0,5 s: o ícone aparece sozinho no centro, de 0,82 para 1 de escala, sem flash.
-- 0,45–1 s: o ícone abre espaço para o nome, revelado a partir da sua lateral direita.
-- 0,95–1,15 s: o Nib entra e se prepara para pular.
-- 1,15–1,95 s: um salto em arco passa sobre a marca, com rotação de até 11 graus.
-- 1,95–2,2 s: contato, compressão e recuperação no pouso.
-- 2,2–2,8 s: marca e Nib param. O site assume o Nib no ponto (1280, 615), tamanho 96, e o leva até o palco real enquanto monta o hero.
+- 0–0,20 s: a logo original aparece.
+- 0,12–0,50 s: o Nib sai da própria logo e pula no N. A base do ícone desaparece, e o N continua sendo a primeira letra do nome.
+- 0,22–0,44 s: apenas “ook” sai ao lado do N.
+- 0,56–0,90 s: o Nib dá um tchau com a mão direita, apoiado no N.
+- 0,96–1,27 s: salto direto para o k, sem pousar nos dois os.
+- 1,27–1,60 s: pouso e passagem para a página. A montagem real leva aproximadamente 0,71 s e termina com o Nib no palco.
 
-Proibidos: flashes, ruído, brilhos decorativos, texto explicativo, loops e loading artificial. Movimento reduzido, economia de dados, deep links, falha de vídeo e Pular abertura levam diretamente ao site.
+Todas as timelines visuais da landing ficam em app/nook-motion.js e são copiadas para assets/nook-motion.js pelo script sync-motion.mjs. O projeto HyperFrames revisa a abertura e também o laboratório dos movimentos do site, incluindo montagem, voo, abertura/recolhimento do notch, navegação, hover e humor do Nib.
 
-Referências: componentes oficiais HyperFrames logo-sting (assentamento e hold, sem flash) e arc-motion-path (trajetória pausada e seekable). O desenho do Nib é o mesmo usado no site.
+Proibidos: flashes, ruído, brilhos decorativos, texto explicativo, loops e espera artificial. Movimento reduzido, economia de dados, deep links, falha de mídia e Pular abertura liberam o site.

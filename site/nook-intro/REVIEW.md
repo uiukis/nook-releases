@@ -1,11 +1,11 @@
-# Revisão da abertura
+# Revisão da abertura curta
 
-Logo original do Nook, palavra revelada a partir da lateral do ícone, salto do Nib com preparação e contato. Fundo carvão e lilás #d6c5f6, sem flash, trilha ou looping. O site monta o hero enquanto transporta o Nib do ponto final do vídeo para o palco real.
+A correção final usa o N da própria marca. O Nib sai dela, pousa no N, dá tchau e salta direto para o k. Apenas “ook” é revelado; não há um segundo N nem quatro pulos. O vídeo termina em 1,6 s.
 
-Medido: 2,800 s, 1920 × 1080, 30 fps, MP4 H.264 silencioso de aproximadamente 103 KB. HyperFrames check passou lint, runtime e layout sem erros. Frames em 0,3 / 0,8 / 1,45 / 2,3 / 2,716 s foram inspecionados; uma folha adicional foi decodificada do MP4 final.
+Medido: MP4 silencioso de 1,600 s, 1920 × 1080, 60 fps e 86.576 bytes. HyperFrames passou lint, runtime e layout sem erros. Foram inspecionados os frames de saída da logo, tchau no N, salto e pouso no k. O laboratório separado exercita os mesmos helpers da landing. A posição final compartilhada é (1000, 374), com tamanho 96.
 
-Aviso mantido: o frame zero é vazio. É uma abertura de página com aparecimento da logo, e não uma miniatura social; o poster local já mostra a logo. Não há espera artificial após o arquivo terminar.
+Aviso mantido: frame zero vazio por intenção, para o aparecimento da logo. Há um poster local com a marca. No laboratório, três instâncias da mesma imagem representam Nib em casa, viajando e reagindo; duplicação de imagem é intencional, não há áudio duplicado.
 
-O ponto mais delicado é a passagem do vídeo para o Nib real. O site calcula object-fit: contain para mapear as coordenadas finais e usa a posição real do palco no navegador. Resize interrompe a abertura com segurança. Pular, Escape, movimento reduzido, economia de dados, deep links e falha de mídia liberam o conteúdo.
+A fonte única das timelines é app/nook-motion.js. sync-motion.mjs prepara a cópia usada pelo HyperFrames; não se edita a cópia gerada manualmente. A página usa a mesma geometria para assumir o Nib na saída do vídeo e montar o hero sem trocar de personagem.
 
-O arquivo não tem áudio por intenção. O estudo anterior de scroll não faz parte deste vídeo; o scroll continua interativo em GSAP.
+Sem som por intenção. O site continua interativo. Pular, Escape, movimento reduzido, economia de dados, deep links, resize e falha de mídia liberam o conteúdo.

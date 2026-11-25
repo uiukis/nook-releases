@@ -39,10 +39,12 @@ Bricolage Grotesque e Instrument Sans são locais, sob OFL em `public/fonts/`. M
 
 ## Abertura em HyperFrames
 
-O projeto editável fica em `nook-intro/`, com roteiro em `SPEC.md` e revisão em `REVIEW.md`. HyperFrames 0.9.94 renderiza a marca e o salto do Nib em um MP4 silencioso de 2,8 segundos, 1920 × 1080 a 30 fps, aproximadamente 103 KB. O site entrega somente `public/motion/nook-intro.mp4` e seu poster, sem rodar HyperFrames no navegador.
+O projeto editável fica em `nook-intro/`, com roteiro em `SPEC.md` e revisão em `REVIEW.md`. HyperFrames 0.9.94 renderiza o Nib saindo da logo, dando tchau no N e saltando direto para o k em um MP4 silencioso de 1,6 segundo, 1920 × 1080 a 60 fps, aproximadamente 85 KB. O site entrega somente `public/motion/nook-intro.mp4` e seu poster, sem rodar HyperFrames no navegador.
 
 `app/opening.js` mapeia o último Nib do vídeo para a posição real do palco, monta a página com GSAP e libera o scroll. Abertura pode ser pulada por botão ou Escape; preferência de movimento reduzido, economia de dados, deep links, falha de autoplay ou de mídia entram direto no conteúdo. Um limite de sete segundos evita bloqueio por vídeo travado. Não há loop.
 
 Para editar, use as skills oficiais HyperFrames e a CLI 0.9.94. Com Node 22+ e FFmpeg disponíveis, abra uma prévia com `hyperframes preview --background`, execute `hyperframes check --json` e revise os snapshots antes de renderizar. A renderização final deve substituir `public/motion/nook-intro.mp4` e o poster. Se mudar o ponto final do Nib na composição, atualize também as coordenadas em `app/opening.js`.
 
 Todo o material do Nook permanece com os direitos reservados indicados na raiz. A publicação do site e dos instaladores não concede uma licença de código aberto para os aplicativos.
+
+As timelines da landing compartilham `app/nook-motion.js` com o HyperFrames: montagem, voo, abertura e troca de conteúdo do notch, navegação, hover e humores. `npm run build` sincroniza a cópia da composição antes de compilar. Para revisar esses movimentos no HyperFrames, execute `node scripts/prepare-motion-review.mjs`; o projeto de revisão será criado em `.local/nook-motion-review/`, sem alterar a abertura curta do site. A CLI permanece fixada em 0.9.94 para reprodutibilidade; a versão 0.9.96 está disponível.

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/sync-motion.mjs",
     "build": "next build",
     "test": "node --test scripts/release-data.test.mjs",
     "sync-releases": "node scripts/sync-releases.mjs"

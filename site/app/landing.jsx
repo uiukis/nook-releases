@@ -62,7 +62,7 @@ export function Landing({releases, basePath}) {
   useEffect(() => mountStory(), []);
   return <>
     <div className="intro-overlay" aria-label="Abertura do Nook" data-intro-state="pending">
-      <video className="intro-video" muted playsInline preload="none" poster={basePath + '/motion/nook-intro-poster.jpg'} aria-label="A logo Nook aparece, o nome se revela e o Nib pula por cima." data-src={basePath + '/motion/nook-intro.mp4'} />
+      <video className="intro-video" muted playsInline preload="none" poster={basePath + '/motion/nook-intro-poster.jpg'} aria-label="O Nib sai da logo, dá tchau no N e pula direto para o k." data-src={basePath + '/motion/nook-intro.mp4'} />
       <button className="skip-intro" type="button">Pular abertura <ArrowRight size={16} aria-hidden="true" /></button>
     </div>
     <noscript><style>{'.intro-overlay{display:none!important}'}</style></noscript>

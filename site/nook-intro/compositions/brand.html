@@ -1,43 +1,32 @@
-<template>
-  <style>
-    @font-face{font-family:Bricolage;src:url('assets/fonts/bricolage.ttf') format('truetype');font-weight:200 800;font-display:block}
-    #root{position:absolute;inset:0;overflow:hidden;background:#151618;color:#f3f1e9}
-    .clip{position:absolute;inset:0}
-    #brand-logo{position:absolute;left:884px;top:447px;width:152px;height:152px;transform-origin:50% 50%}
-    #brand-name-mask{position:absolute;left:858px;top:434px;width:410px;height:185px;overflow:hidden}
-    #brand-name{font-family:Bricolage,sans-serif;font-variation-settings:'opsz' 48,'wdth' 100;font-weight:800;font-size:176px;letter-spacing:-10px;line-height:1;color:var(--accent,#d6c5f6)}
-    #brand-nib{position:absolute;left:0;top:0;width:96px;height:96px;transform-origin:50% 80%}
-    #brand-nib svg{display:block;width:100%;height:100%}
-    #brand-nib-shadow{position:absolute;left:1290px;top:695px;width:75px;height:5px;background:#d6c5f630;border-radius:50%}
-  </style>
-  <div id="root" data-composition-id="brand" data-width="1920" data-height="1080">
-    <div id="brand-lockup" class="clip" data-start="0" data-duration="2.8" data-track-index="0" data-layout-allow-overlap>
-      <img id="brand-logo" src="assets/nook.svg" alt="Logo Nook" />
-      <div id="brand-name-mask"><div id="brand-name" data-var-text="brand">Nook</div></div>
-    </div>
-    <div id="brand-character" class="clip" data-start="0" data-duration="2.8" data-track-index="1">
-      <div id="brand-nib-shadow"></div>
-      <div id="brand-nib"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="1" cy="8.5" r=".95" fill="#e9e5f0"/><circle cx="12" cy="8.5" r=".95" fill="#e9e5f0"/><rect x="1.7" y="2.6" width="9.6" height="8.4" rx="3.6" fill="#f8f6ff"/><ellipse cx="3.3" cy="7.7" rx=".72" ry=".32" fill="#ed9db0" opacity=".35"/><ellipse cx="9.7" cy="7.7" rx=".72" ry=".32" fill="#ed9db0" opacity=".35"/><g fill="#272130"><rect x="3.8" y="5.2" width="1.4" height="1.9" rx=".7"/><rect x="7.8" y="5.2" width="1.4" height="1.9" rx=".7"/></g><path d="M5.7 7.8q.8.9 1.6 0" stroke="#272130" stroke-width=".42" stroke-linecap="round"/></svg></div>
-    </div>
-  </div>
-  <script>
-    // Adapted from logo-sting (settle/hold) and arc-motion-path (seekable curve).
-    gsap.registerPlugin(MotionPathPlugin);
-    const tl=gsap.timeline({paused:true});
-    tl.fromTo('#brand-logo',{opacity:0,scale:.82,rotation:-7},{opacity:1,scale:1,rotation:0,duration:.45,ease:'power3.out'},0);
-    tl.fromTo('#brand-logo',{x:0},{x:-196,duration:.5,ease:'power3.inOut',immediateRender:false},.43);
-    tl.fromTo('#brand-name-mask',{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',duration:.48,ease:'power3.out',immediateRender:true},.53);
-    tl.fromTo('#brand-name',{x:-75},{x:0,duration:.48,ease:'power3.out',immediateRender:true},.53);
-    tl.fromTo('#brand-nib',{x:688,y:615,opacity:0,scale:1},{opacity:1,duration:.12,ease:'power1.out',immediateRender:true},.91);
-    tl.fromTo('#brand-nib',{scaleX:1,scaleY:1},{scaleX:1.12,scaleY:.84,duration:.13,ease:'power2.in',immediateRender:false},1.03);
-    tl.to('#brand-nib',{scaleX:.93,scaleY:1.08,duration:.13,ease:'power2.out'},1.16);
-    tl.to('#brand-nib',{motionPath:{path:[{x:688,y:615},{x:800,y:360},{x:1015,y:292},{x:1210,y:395},{x:1280,y:615}],curviness:1.1,autoRotate:false},duration:.83,ease:'power1.inOut'},1.16);
-    tl.fromTo('#brand-nib',{rotation:0},{rotation:-11,duration:.25,ease:'power1.out',immediateRender:false},1.16);
-    tl.to('#brand-nib',{rotation:8,duration:.3,ease:'power1.inOut'},1.41);
-    tl.to('#brand-nib',{rotation:0,duration:.28,ease:'power2.out'},1.71);
-    tl.to('#brand-nib',{scaleX:1.15,scaleY:.8,duration:.09,ease:'power2.out'},1.99);
-    tl.to('#brand-nib',{scaleX:1,scaleY:1,duration:.19,ease:'power2.out'},2.08);
-    tl.fromTo('#brand-nib-shadow',{opacity:0,scaleX:.5},{opacity:1,scaleX:1,duration:.2,ease:'power2.out',immediateRender:true},1.94);
-    window.__timelines.brand=tl;
-  </script>
-</template>
+<template><style>
+@font-face{font-family:Bricolage;src:url('assets/fonts/bricolage.ttf') format('truetype');font-weight:200 800;font-display:block}
+#root{position:absolute;inset:0;overflow:hidden;background:#151618;color:#f3f1e9}.clip{position:absolute;inset:0}
+#brand-logo{z-index:2;position:absolute;left:884px;top:447px;width:152px;height:152px;transform-origin:50% 50%}#brand-logo>svg{width:100%;height:100%}
+#brand-name-mask{z-index:1;position:absolute;left:808px;top:434px;width:340px;height:185px;overflow:hidden}#brand-name{height:100%;position:relative;font-family:Bricolage,sans-serif;font-variation-settings:'opsz' 48,'wdth' 100;font-weight:800;font-size:176px;letter-spacing:-8px;line-height:1;color:var(--accent,#d6c5f6)}#brand-name span{position:absolute;top:0;display:block;width:110px;text-align:center;transform-origin:50% 100%}#brand-o1{left:0}#brand-o2{left:105px}#brand-k{left:210px}
+#brand-nib{position:absolute;left:0;top:0;width:96px;height:96px;transform-origin:0 0}#brand-nib-body{width:100%;height:100%;transform-origin:50% 85%}#brand-nib svg{overflow:visible;display:block;width:100%;height:100%}
+</style><div id="root" data-composition-id="brand" data-width="1920" data-height="1080"><div id="brand-lockup" class="clip" data-start="0" data-duration="1.6" data-track-index="0" data-layout-allow-overlap><div id="brand-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1D63"/><stop offset="1" stop-color="#150F32"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FAF0FF"/><stop offset="1" stop-color="#D1C7F5"/></linearGradient>
+    <clipPath id="tile"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>
+  </defs>
+  <rect id="brand-tile" x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <g clip-path="url(#tile)">
+    <g id="brand-letter" transform="translate(512 480) scale(0.9) translate(-512 -512)">
+      <polygon points="290,330 410,330 734,694 614,694" fill="#A98BFF"/>
+      <rect x="270" y="290" width="140" height="800" rx="70" fill="#EDE4FF"/>
+      <rect x="614" y="-70" width="140" height="814" rx="70" fill="#EDE4FF"/>
+    </g>
+    <g id="brand-inset-nib" transform="translate(-131 0)">
+      <rect x="702.0" y="712" width="192.0" height="168.0" rx="72.0" fill="url(#body)" stroke="#fff" stroke-opacity="0.6" stroke-width="5.0"/>
+      <ellipse cx="734.0" cy="815.0" rx="16.0" ry="9.0" fill="#FF8C9E" opacity="0.45"/>
+      <ellipse cx="862.0" cy="815.0" rx="16.0" ry="9.0" fill="#FF8C9E" opacity="0.45"/>
+      <rect x="745.0" y="761.0" width="26.0" height="38.0" rx="13.0" fill="#211C30"/>
+      <circle cx="754.0" cy="770.0" r="5.6" fill="#fff" opacity="0.9"/>
+      <rect x="825.0" y="761.0" width="26.0" height="38.0" rx="13.0" fill="#211C30"/>
+      <circle cx="834.0" cy="770.0" r="5.6" fill="#fff" opacity="0.9"/>
+      <path d="M782.0 810.0 Q798.0 828.0 814.0 810.0" fill="none" stroke="#211C30" stroke-width="8.0" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
+</div><div id="brand-name-mask"><div id="brand-name" aria-label="ook"><span id="brand-o1">o</span><span id="brand-o2">o</span><span id="brand-k">k</span></div></div></div><div id="brand-character" class="clip" data-start="0" data-duration="1.6" data-track-index="1"><div id="brand-nib"><div id="brand-nib-body"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="1" cy="8.5" r=".95" fill="#e9e5f0"/><circle id="brand-wave-hand" cx="12" cy="8.5" r=".95" fill="#e9e5f0"/><rect x="1.7" y="2.6" width="9.6" height="8.4" rx="3.6" fill="#f8f6ff"/><ellipse cx="3.3" cy="7.7" rx=".72" ry=".32" fill="#ed9db0" opacity=".35"/><ellipse cx="9.7" cy="7.7" rx=".72" ry=".32" fill="#ed9db0" opacity=".35"/><g fill="#272130"><rect x="3.8" y="5.2" width="1.4" height="1.9" rx=".7"/><rect x="7.8" y="5.2" width="1.4" height="1.9" rx=".7"/></g><path d="M5.7 7.8q.8.9 1.6 0" stroke="#272130" stroke-width=".42" stroke-linecap="round"/></svg></div></div></div></div><script>gsap.registerPlugin(MotionPathPlugin);window.__timelines.brand=NookMotion.brandIntro(gsap);</script></template>
