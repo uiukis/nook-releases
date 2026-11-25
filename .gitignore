@@ -3,3 +3,7 @@ site/.next/
 site/out/
 .vercel/
 .local/
+site/nook-intro/.hyperframes/
+site/nook-intro/renders/
+site/nook-intro/node_modules/
+site/nook-intro/.thumbnails/

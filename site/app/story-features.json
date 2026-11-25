@@ -1,0 +1,243 @@
+[
+  {
+    "id": "music",
+    "label": "Música",
+    "title": "O próximo play está logo ali.",
+    "text": "Troque de faixa, ajuste o volume e volte para o que estava fazendo. Sem caçar a janela do player.",
+    "details": [
+      "Player, posição e volume",
+      "Letras e saída de áudio no Mac"
+    ],
+    "win": "No Windows, controles de mídia dos players compatíveis.",
+    "states": [
+      [
+        "default",
+        "Tocando agora"
+      ],
+      [
+        "paused",
+        "Em pausa"
+      ],
+      [
+        "lyrics",
+        "Com letra"
+      ],
+      [
+        "empty",
+        "Sem música"
+      ]
+    ]
+  },
+  {
+    "id": "files",
+    "label": "Estante",
+    "title": "Soltou. Guardou. Achou.",
+    "text": "Aquele PDF, uma captura, a imagem que você vai mandar. Arraste para o notch e tenha tudo à mão, sem mover os originais.",
+    "details": [
+      "Arraste de entrada e saída",
+      "Prévia e acesso aos arquivos"
+    ],
+    "win": "No Windows, abra os arquivos ou encontre-os no Explorer.",
+    "states": [
+      [
+        "default",
+        "Com arquivos"
+      ],
+      [
+        "drop",
+        "Soltando arquivo"
+      ],
+      [
+        "capture",
+        "Nova captura"
+      ],
+      [
+        "empty",
+        "Vazia"
+      ]
+    ]
+  },
+  {
+    "id": "usage",
+    "label": "Cotas",
+    "title": "Saiba quanto ainda dá pra criar.",
+    "text": "Suas janelas de uso, o próximo horário de renovação e aquela conta que está perto do limite. Em uma olhada.",
+    "details": [
+      "Claude, Codex, Cursor e Antigravity no Mac",
+      "Limites, renovação e histórico"
+    ],
+    "win": "A leitura de cotas no Windows cobre o Codex.",
+    "states": [
+      [
+        "default",
+        "Uso das contas"
+      ],
+      [
+        "warning",
+        "Perto do limite"
+      ],
+      [
+        "error",
+        "Falha de leitura"
+      ],
+      [
+        "loading",
+        "Atualizando"
+      ]
+    ]
+  },
+  {
+    "id": "agents",
+    "label": "Agentes",
+    "title": "Deixa trabalhando. O Nook avisa.",
+    "text": "Veja o que o Codex está fazendo, quando o Claude precisa de você e qual projeto acabou de ficar pronto.",
+    "details": [
+      "Atividade e contexto por projeto",
+      "Trabalhando, esperando e concluído"
+    ],
+    "win": "Windows acompanha Codex, Claude Code e Cursor. Mac inclui Antigravity.",
+    "states": [
+      [
+        "default",
+        "Trabalhando"
+      ],
+      [
+        "waiting",
+        "Esperando você"
+      ],
+      [
+        "done",
+        "Tudo pronto"
+      ],
+      [
+        "empty",
+        "Sem sessões"
+      ]
+    ]
+  },
+  {
+    "id": "clipboard",
+    "label": "Transferência",
+    "title": "Copiou de novo? Não precisa.",
+    "text": "Encontre no histórico, confira a prévia e use mais uma vez. Um lugar para voltar àquilo que você acabou de copiar.",
+    "details": [
+      "Busca, prévia e copiar novamente",
+      "Textos, imagens e cores no Mac"
+    ],
+    "win": "No Windows, histórico de textos em memória. A captura começa quando você ativa.",
+    "states": [
+      [
+        "default",
+        "Histórico"
+      ],
+      [
+        "image",
+        "Imagem"
+      ],
+      [
+        "empty",
+        "Vazio"
+      ],
+      [
+        "disabled",
+        "Desativado"
+      ]
+    ]
+  },
+  {
+    "id": "tools",
+    "label": "Foco",
+    "title": "Um tempo só pra fazer acontecer.",
+    "text": "Escolha um tempo de foco e vá. O contador fica por perto, sem virar mais uma janela pedindo atenção.",
+    "details": [
+      "Timer com pausa e retomada",
+      "Calendário e avisos do terminal no Mac"
+    ],
+    "win": "Windows tem timer de foco e atalho para o Relógio.",
+    "states": [
+      [
+        "default",
+        "Hora de focar"
+      ],
+      [
+        "calendar",
+        "Calendário"
+      ],
+      [
+        "empty",
+        "Agenda livre"
+      ]
+    ]
+  },
+  {
+    "id": "system",
+    "label": "Sistema",
+    "title": "Quando o computador pede um respiro.",
+    "text": "Confira a memória, o consumo e os processos. Fica mais fácil entender o que está pesando no seu dia.",
+    "details": [
+      "Memória e processos",
+      "CPU e ações por aplicativo no Mac"
+    ],
+    "win": "No Windows, leitura de memória e processos. Nada é encerrado automaticamente.",
+    "states": [
+      [
+        "default",
+        "Tudo tranquilo"
+      ],
+      [
+        "warning",
+        "Memória cheia"
+      ],
+      [
+        "empty",
+        "Sem processos"
+      ]
+    ]
+  },
+  {
+    "id": "mole",
+    "label": "Limpeza",
+    "title": "Um pouco mais de espaço pra você.",
+    "text": "No Mac, encontre as ações do Mole e veja como está o disco. Você revisa o que vai acontecer e continua no terminal.",
+    "details": [
+      "Oito ações do Mole no Mac",
+      "Confirmação antes de alterar dados"
+    ],
+    "win": "No Windows, a aba Armazenamento abre as ferramentas nativas do sistema.",
+    "states": [
+      [
+        "default",
+        "Mole conectado"
+      ],
+      [
+        "missing",
+        "Sem o Mole"
+      ]
+    ]
+  },
+  {
+    "id": "approvals",
+    "label": "Permissões",
+    "title": "Você decide. Com o contexto na mão.",
+    "text": "O Claude Code pediu permissão? Leia o comando, confira o projeto e permita, negue ou continue no terminal.",
+    "details": [
+      "Comando e contexto completos",
+      "Pedidos sensíveis em destaque"
+    ],
+    "win": "Disponível em Mac e Windows. O notch fechado não aprova comandos.",
+    "states": [
+      [
+        "default",
+        "Pedido pendente"
+      ],
+      [
+        "risk",
+        "Pedido sensível"
+      ],
+      [
+        "empty",
+        "Nada pendente"
+      ]
+    ]
+  }
+]

@@ -29,12 +29,20 @@ Também é possível executar **Sync release downloads → Run workflow** no Git
 
 `public/preview/index.html` é uma simulação de interface com nove abas, seis seções de configurações e estados do Nib. Os estados de erro, carregamento, vazio, permissões e ações são exemplos. Nenhuma conta é conectada e nenhum comando de sistema é executado. As diferenças de disponibilidade entre macOS e Windows estão descritas no site.
 
-O componente React em `app/showcase.jsx` controla a simulação por `postMessage`, validando origem e janela. As imagens e fontes são locais; não há dependência de serviços de imagem ou fonte externos durante a visita.
+`app/landing.jsx` contém a landing aprovada e seus nove capítulos. `app/scroll-controller.js` mantém o notch no topo, transporta o Nib ao entrar nos recursos e troca a simulação por `postMessage`, validando origem e janela. A volta ao início devolve o Nib ao palco. As imagens e fontes são locais; não há dependência de serviços de imagem ou fonte externos durante a visita.
 
 ## Direção visual e recursos
 
-O design acompanha o Nook: fundo obsidiana, acento lilás, notch junto à borda superior e linguagem direta. O produto interativo ocupa a posição principal; as funcionalidades são exploradas por abas, situações de exemplo e controles reais da simulação.
+O design aprovado combina a composição da primeira proposta com o fundo carvão da terceira e o lilás `#d6c5f6` da primeira. O Nib pequeno ocupa o palco inicial; as funcionalidades aparecem no notch fixo conforme a página é percorrida. Cada capítulo tem situações de exemplo e controles reais da simulação.
 
-Manrope está distribuída sob a licença OFL em `public/fonts/OFL-Manrope.txt`. O papel de parede original `public/wallpaper.png` foi gerado com OpenAI ImageGen: paisagem panorâmica de montanhas e pinheiros, em tons discretos de cinza e lavanda, sem interface ou texto. O logotipo e os desenhos do Nib fazem parte da identidade do Nook. Veja também os avisos de terceiros na raiz.
+Bricolage Grotesque e Instrument Sans são locais, sob OFL em `public/fonts/`. Manrope e o papel de parede anterior permanecem como recursos do projeto. O logotipo e os desenhos do Nib fazem parte da identidade do Nook. Veja também os avisos de terceiros na raiz.
+
+## Abertura em HyperFrames
+
+O projeto editável fica em `nook-intro/`, com roteiro em `SPEC.md` e revisão em `REVIEW.md`. HyperFrames 0.9.94 renderiza a marca e o salto do Nib em um MP4 silencioso de 2,8 segundos, 1920 × 1080 a 30 fps, aproximadamente 103 KB. O site entrega somente `public/motion/nook-intro.mp4` e seu poster, sem rodar HyperFrames no navegador.
+
+`app/opening.js` mapeia o último Nib do vídeo para a posição real do palco, monta a página com GSAP e libera o scroll. Abertura pode ser pulada por botão ou Escape; preferência de movimento reduzido, economia de dados, deep links, falha de autoplay ou de mídia entram direto no conteúdo. Um limite de sete segundos evita bloqueio por vídeo travado. Não há loop.
+
+Para editar, use as skills oficiais HyperFrames e a CLI 0.9.94. Com Node 22+ e FFmpeg disponíveis, abra uma prévia com `hyperframes preview --background`, execute `hyperframes check --json` e revise os snapshots antes de renderizar. A renderização final deve substituir `public/motion/nook-intro.mp4` e o poster. Se mudar o ponto final do Nib na composição, atualize também as coordenadas em `app/opening.js`.
 
 Todo o material do Nook permanece com os direitos reservados indicados na raiz. A publicação do site e dos instaladores não concede uma licença de código aberto para os aplicativos.

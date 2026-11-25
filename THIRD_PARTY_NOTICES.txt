@@ -1,5 +1,13 @@
 Nook for macOS includes the Zstandard decoder. Its license follows.
 
+The website additionally uses Bricolage Grotesque and Instrument Sans under the
+SIL Open Font License (copies in site/public/fonts), and GSAP 3.15.1 including
+MotionPathPlugin under its Standard license: https://gsap.com/standard-license.
+GSAP's original notices are retained in the motion project's vendor files.
+
+The editable intro adapts the logo-sting and arc-motion-path motion techniques
+from the official HyperFrames registry: https://github.com/heygen-com/hyperframes.
+
 BSD License
 
 For Zstandard software
