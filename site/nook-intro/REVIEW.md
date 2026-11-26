@@ -9,3 +9,8 @@ Hidratação: o SVG da abertura não faz parte do HTML inicial a ser comparado c
 Um erro diferente de MutationObserver também foi reproduzido no navegador embutido em uma página estática com iframe e sem scripts da aplicação. Esse controle foi arquivado em .local/hop-evidence e retirado da pasta pública; não é atribuído à animação do Nook. A ausência desse aviso de ambiente não é critério alegado de aprovação do site.
 
 O laboratório HyperFrames é uma composição representativa com os mesmos helpers; não é gravação do site ou do aplicativo macOS. A conferência do produto real usa ações e capturas no navegador, incluindo navegação pelas nove seções e retorno. A base de medidas e curvas nativas foi lida no código do Mac; não se alega comparação visual quadro a quadro com macOS.
+## Fechamento em 26/11/2026
+
+Movimento reduzido conferido no navegador: intro liberada diretamente, nenhum título invisível, troca entre Música/Estante concluída e recolhimento/reabertura funcionais. Movimento normal: o clique direto no controle recolhe e a pequena rolagem mantém o estado fechado; o painel reabre, a busca preserva nookabc/cursor 7/foco e configurações/downloads fecham por Escape. No viewport 390 × 844, recolher e reabrir passaram sem overflow; o estado Descansando atualizou tarefa, expressão e mensagem.
+
+A inversão com a roda do mouse foi observada de jumping/travel/zero painéis ativos para idle/notch/Música/um painel ativo. A abertura completa mediu 2669 ms no fechamento. O ensaio por viewport não equivale a aparelho físico; não há alegação de teste no macOS nativo. As pendências de recolhimento manual e preferência reduzida foram encerradas.

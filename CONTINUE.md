@@ -1,5 +1,7 @@
 # Continuar o site do Nook em outra máquina
 
+**Estado em 26/11/2026: demanda concluída e validada.** Não há implementação obrigatória pendente desta rodada. As instruções abaixo preservam o contexto para novas solicitações.
+
 ## Prompt para colar no Codex
 
 Continue o desenvolvimento do site do Nook neste repositório: https://github.com/uiukis/nook-releases, branch main. Leia este arquivo, site/README.md, site/AGENTS.md e site/nook-intro/REVIEW.md antes de alterar algo. Entre em site/, use Node 22 ou 24, execute npm ci, node scripts/sync-motion.mjs e npm run dev. O site publicado é https://nook-notch-beta.vercel.app/.
@@ -16,7 +18,7 @@ Foi corrigido um erro de hidratação reportado em screenshot: Dark Reader inser
 
 Use as skills frontend-design, ui-taste e HyperFrames quando disponíveis. Timelines canônicas estão em site/app/nook-motion.js; não edite manualmente site/nook-intro/assets/nook-motion.js nem site/app/intro-brand.json. npm run build sincroniza as cópias. Mantenha HyperFrames CLI 0.9.94; não atualize dependências sem uma razão concreta. O laboratório gerado por node scripts/prepare-motion-review.mjs demonstra ida e volta entre dois notches usando o mesmo helper handoff; ele é uma composição representativa, não uma gravação do navegador. Use preview --background para manter a prévia viva.
 
-Próxima conferência: testar rolagem lenta, rápida e inversão no meio do salto; entrada/saída do hero e da área de companhia; recolher e reabrir manualmente; teclado, busca preservando cursor, configurações e downloads; viewport móvel real e preferência de movimento reduzido. No navegador embutido, o teste foi limitado a viewport, não aparelho físico. Um erro separado de MutationObserver também foi reproduzido em uma página estática com iframe e sem scripts do Nook; não atribua esse aviso automaticamente ao aplicativo nem esconda erros reais.
+Validação final concluída: rolagem e inversão no meio do salto, retorno ao notch anterior, hero e área de companhia, recolhimento e reabertura manual com animação normal e movimento reduzido, configurações, downloads e busca preservando texto/cursor. O recolhimento permaneceu fechado após pequena rolagem; a busca manteve nookabc com cursor na posição 7. No viewport de 390 × 844 não houve overflow horizontal. A abertura completa foi medida novamente em 2669 ms. Ao fazer alterações futuras, repita esses casos. No navegador embutido, o teste foi limitado a viewport, não aparelho físico. Um erro separado de MutationObserver também foi reproduzido em uma página estática com iframe e sem scripts do Nook; não atribua esse aviso automaticamente ao aplicativo nem esconda erros reais.
 
 Foram conferidos os nove capítulos e o retorno, um painel ativo por vez, controles de mídia/configurações no celular, reações do Nib e ausência do erro de hidratação do print na página recarregada. Os sete testes de seleção/sincronização dos downloads e o build passaram. HyperFrames passou check na marca e no laboratório; o MP4 da marca foi atualizado para 2 s a 60 fps.
 
