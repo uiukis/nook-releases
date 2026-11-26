@@ -29,13 +29,14 @@ export function installInteractionMotion({gsap,doc,reduced,hover=false}) {
   const kill=motion=>{if(motion){motion.kill();active.delete(motion);}};
   const play=motion=>{active.add(motion);motion.eventCallback('onComplete',()=>active.delete(motion));if(reduced())motion.progress(1);else motion.play(0);};
   const button=event=>event.target?.closest?.('button,a:not(.skip),summary');
+  const within=(target,other)=>Boolean(other?.nodeType&&target.contains(other));
   const release=target=>{if(!target)return;kill(pressed.get(target));const motion=NookMotion.press(gsap,target,false);pressed.set(target,motion);play(motion);};
   on('pointerdown',event=>{const target=button(event);if(!target||target.disabled)return;kill(pressed.get(target));const motion=NookMotion.press(gsap,target,true);pressed.set(target,motion);play(motion);});
   on('pointerup',event=>release(button(event)));on('pointercancel',event=>release(button(event)));
   on('keydown',event=>{if(![' ','Enter'].includes(event.key))return;const target=button(event);if(!target)return;kill(pressed.get(target));const motion=NookMotion.press(gsap,target,true);pressed.set(target,motion);play(motion);});
   on('keyup',event=>{if([' ','Enter'].includes(event.key))release(button(event));});
-  on('pointerout',event=>{const target=button(event);if(target&&!target.contains(event.relatedTarget)){release(target);if(hover){kill(hovered.get(target));const motion=gsap.timeline({paused:true}).to(target,{y:0,duration:.18});hovered.set(target,motion);play(motion);}}});
-  if(hover)on('pointerover',event=>{const target=button(event);if(!target||target.contains(event.relatedTarget)||reduced())return;kill(hovered.get(target));const motion=NookMotion.hover(gsap,target);hovered.set(target,motion);play(motion);});
+  on('pointerout',event=>{const target=button(event);if(target&&!within(target,event.relatedTarget)){release(target);if(hover){kill(hovered.get(target));const motion=gsap.timeline({paused:true}).to(target,{y:0,duration:.18});hovered.set(target,motion);play(motion);}}});
+  if(hover)on('pointerover',event=>{const target=button(event);if(!target||within(target,event.relatedTarget)||reduced())return;kill(hovered.get(target));const motion=NookMotion.hover(gsap,target);hovered.set(target,motion);play(motion);});
   const update=()=>{
     doc.querySelectorAll('.switch[aria-checked]').forEach(node=>{
       const key=node.dataset.pref||node.getAttribute('aria-label'),checked=node.getAttribute('aria-checked')==='true',previous=switches.get(key);

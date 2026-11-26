@@ -1,14 +1,11 @@
-# Nook — abertura curta
+# Nook — abertura e percurso do Nib
 
-Vídeo silencioso de 1,6 segundo, 1920 × 1080 a 60 fps. Fundo #151618, logo original, Bricolage Grotesque e lilás #d6c5f6.
+Identidade mantida: carvão #151618, lilás #d6c5f6, Bricolage Grotesque e Instrument Sans locais.
 
-- 0–0,20 s: a logo original aparece.
-- 0,12–0,50 s: o Nib sai da própria logo e pula no N. A base do ícone desaparece, e o N continua sendo a primeira letra do nome.
-- 0,22–0,44 s: apenas “ook” sai ao lado do N.
-- 0,56–0,90 s: o Nib dá um tchau com a mão direita, apoiado no N.
-- 0,96–1,27 s: salto direto para o k, sem pousar nos dois os.
-- 1,27–1,60 s: pouso e passagem para a página. A montagem real leva aproximadamente 0,71 s e termina com o Nib no palco.
+A marca dura 2 s, 1920 × 1080 a 60 fps. A logo original aparece; o Nib sai, pousa no N e dá tchau; apenas “ook” surge ao lado do N. O personagem salta direto para o k. A coreografia original roda a 80% da velocidade e segura o último quadro até 2 s. A montagem do conteúdo dura aproximadamente 0,71 s; um limite global de 3 s também libera a página em caso de atraso.
 
-Todas as timelines visuais da landing ficam em app/nook-motion.js e são copiadas para assets/nook-motion.js pelo script sync-motion.mjs. O projeto HyperFrames revisa a abertura e também o laboratório dos movimentos do site, incluindo montagem, voo, abertura/recolhimento do notch, navegação, hover e humor do Nib.
+O percurso entre seções usa a posição de rolagem e coordenadas do documento. Cada par de destinos fornece uma timeline normalizada de 0 a 1. O painel anterior recolhe no começo, o personagem percorre o arco e o novo painel abre nos 22% finais. O relógio é reversível e não depende de animações anteriores. Os estados de descanso entre os saltos permitem ler e usar cada painel.
 
-Proibidos: flashes, ruído, brilhos decorativos, texto explicativo, loops e espera artificial. Movimento reduzido, economia de dados, deep links, falha de mídia e Pular abertura liberam o site.
+Cada seção tem uma borda discreta e um notch compacto. A área final recebe o personagem ampliado e apresenta uma atividade fictícia, com reações finitas a cinco humores. Títulos entram por palavras com deslocamento de 14 px, duração de 0,48 s e intervalo de 0,035 s. Preferência de movimento reduzido aplica os estados finais diretamente.
+
+Fonte única das timelines: app/nook-motion.js. sync-motion.mjs gera a cópia do HyperFrames e os vetores da abertura. Os vetores são montados no cliente após hidratação; não se comparam SVGs alterados por extensões ao HTML do servidor. O laboratório de 5,8 s demonstra ida e volta entre dois notches usando o mesmo helper handoff. Sem áudio por intenção.

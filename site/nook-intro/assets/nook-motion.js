@@ -32,7 +32,7 @@
   tl.fromTo(face,{opacity:1},{opacity:0,duration:.16,ease:'power1.out',immediateRender:true},.08);
   return tl;
  }
- const intro={width:1920,height:1080,duration:1.6,landing:{x:1000,y:374,size:96}};
+ const intro={width:1920,height:1080,duration:2,landing:{x:1000,y:374,size:96}};
 
  function brandIntro(gsap){
   const tl=gsap.timeline({paused:true});
@@ -61,7 +61,8 @@
   tl.fromTo('#brand-nib',{x:738,y:381,scale:1},{motionPath:{path:[{x:738,y:381},{x:865,y:235},{x:intro.landing.x,y:intro.landing.y}],curviness:1.1},duration:.31,ease:'power1.inOut',immediateRender:false},.96);
   tl.to('#brand-nib-body',{rotation:0,duration:.08,ease:'power2.out'},1.19);
   land(1.27,'#brand-k');
-  return tl;
+  tl.timeScale(.8);
+  return gsap.timeline({paused:true}).add(tl.paused(false),0).set('#brand-nib',{rotation:0},intro.duration);
  }
 
  function prepareAssembly(gsap,{header,copy,stage,home}){
@@ -76,6 +77,7 @@
   tl.to(els.stage,{opacity:1,y:0,scale:1,duration:.48,ease:'power3.out'},.08);
   tl.to(els.copy,{opacity:1,y:0,duration:.45,ease:'power3.out'},.16);
   tl.to(els.header,{opacity:1,y:0,duration:.4,ease:'power2.out'},.27);
+  if(els.words?.length)tl.add(text(gsap,els.words).paused(false),.16);
   tl.to(els.traveler,{motionPath:{path:[from,{x:from.x+35,y:from.y-70},{x:target.left-35,y:target.top-50},{x:target.left,y:target.top}],curviness:1.05},scale:target.width/80,duration:.9,ease:'power2.inOut'},.02);
   return tl;
  }
@@ -126,4 +128,30 @@
  const spin=(gsap,target)=>gsap.timeline({paused:true}).fromTo(target,{rotation:0},{rotation:360,duration:1.7,ease:'none'});
  const toggle=(gsap,target,from,to)=>gsap.timeline({paused:true}).fromTo(target,{'--nook-switch':`${from}px`},{'--nook-switch':`${to}px`,duration:.25,ease:native.tabEase});
  const travel=(gsap,target,to)=>gsap.timeline({paused:true}).to(target,{x:to.x,y:to.y,duration:.55,ease:'power3.inOut'});
- window.NookMotion={flight,reveal,intro,brandIntro,prepareAssembly,assemble,fold,fade,hover,mood,native,outline,surface,arrival,tab,panel,press,select,fill,spin,toggle,travel};
+ function hop(gsap,actor,from,to,duration=.64){
+  const dx=to.left-from.left,dy=to.top-from.top,arc=Math.min(120,Math.max(52,Math.abs(dx)*.16+Math.abs(dy)*.05));
+  const tl=gsap.timeline({paused:true});
+  tl.fromTo(actor,{x:from.left,y:from.top,scale:from.width/80,rotation:0,opacity:1,transformOrigin:'0 0'},
+   {motionPath:{path:[{x:from.left,y:from.top},{x:from.left+dx*.32,y:from.top+dy*.25-arc},{x:from.left+dx*.76,y:from.top+dy*.7-arc},{x:to.left,y:to.top}],curviness:.8},scale:to.width/80,duration,ease:'power1.inOut',immediateRender:false},0);
+  tl.to(actor,{rotation:dx<0?-9:9,duration:duration*.42,ease:'sine.out'},0);
+  tl.to(actor,{rotation:0,duration:duration*.32,ease:'sine.inOut'},duration*.68);
+  return tl;
+ }
+ function text(gsap,words){return gsap.timeline({paused:true}).fromTo(words,{y:14,opacity:0},{y:0,opacity:1,duration:.48,stagger:.035,ease:'power3.out'});}
+ function handoff(gsap,actor,start,land,end){return gsap.timeline({paused:true}).set(actor,{x:start.left,y:start.top,scale:start.width/80,opacity:1,rotation:0,transformOrigin:'0 0'},0).add(hop(gsap,actor,start,land,.78).paused(false),0).to(actor,{x:end.left,y:end.top,scale:end.width/80,duration:.22,ease:native.openEase},.78).set(actor,{rotation:0},1);}
+ function companion(gsap,{character,shadow,particles,bar},mood){
+  const tl=gsap.timeline({paused:true});tl.set(character,{x:0,y:0,scale:1,rotation:0},0);tl.set(particles,{x:0,y:0,opacity:0,rotation:0},0);
+  tl.fromTo(bar,{scaleX:mood==='done'?1:.18},{scaleX:mood==='sleeping'?.12:1,duration:mood==='working'?1.3:.45,ease:'power2.out'},0);
+  if(mood==='done'){
+   tl.to(character,{y:-42,rotation:-9,duration:.3,ease:'power2.out'},0).to(character,{y:0,rotation:0,duration:.42,ease:'bounce.out'},.3);
+   particles.forEach((particle,i)=>{const angle=(i/particles.length)*Math.PI*2;tl.fromTo(particle,{x:0,y:0,opacity:1},{x:Math.cos(angle)*130,y:Math.sin(angle)*100-50,opacity:0,rotation:i*47,duration:.8,ease:'power2.out'},.22);});
+  }else if(mood==='working'){
+   tl.to(character,{y:-9,rotation:-4,duration:.25}).to(character,{y:0,rotation:4,duration:.3}).to(character,{y:-6,rotation:-3,duration:.3}).to(character,{y:0,rotation:0,duration:.3});
+  }else if(mood==='waiting'){
+   tl.to(character,{y:-8,x:-4,rotation:-5,duration:.2}).to(character,{x:4,rotation:5,duration:.2}).to(character,{x:0,y:0,rotation:0,duration:.3});
+  }else if(mood==='sleeping')tl.to(character,{y:7,rotation:-7,scale:.96,duration:.6,ease:'sine.inOut'});
+  else tl.to(character,{y:-12,duration:.25,ease:'power2.out'}).to(character,{y:0,duration:.35,ease:'power2.inOut'});
+  tl.to(shadow,{scaleX:mood==='sleeping'?.85:1,duration:.5,ease:'sine.inOut'},0);
+  return tl;
+ }
+ window.NookMotion={flight,reveal,intro,brandIntro,prepareAssembly,assemble,fold,fade,hover,mood,native,outline,surface,arrival,tab,panel,press,select,fill,spin,toggle,travel,hop,handoff,text,companion};

@@ -10,4 +10,4 @@ export const metadata = {
   icons: { icon: basePath + '/nook.svg' },
   openGraph: { title: 'Nook — Seu dia. No seu notch.', description: 'Experimente o notch. Música, agentes de IA, arquivos e ferramentas do dia a dia para Mac e Windows.', type: 'website', locale: 'pt_BR' },
 };
-export default function Layout({ children }) { return <html lang="pt-BR"><body className="concept-c scroll-story" data-scroll-story="">{children}</body></html>; }
+export default function Layout({ children }) { return <html lang="pt-BR"><head><meta name="darkreader-lock" /></head><body className="concept-c scroll-story" data-scroll-story="">{children}</body></html>; }
