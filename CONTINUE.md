@@ -46,3 +46,5 @@ npm run dev
 ```
 
 Validação: npm test e npm run build. A publicação de main dispara o projeto Vercel nook-site; confira o SHA do deploy antes de afirmar que está atualizado. Os caminhos C:/developer e os processos localhost da máquina anterior não são necessários para continuar.
+
+Na conferência de publicação, foi corrigido um clique atravessando o notch compacto: abrir em pointerenter removia o botão antes do clique e podia atingir uma aba do iframe. A demonstração recolhida agora abre por clique, toque ou teclado, mantendo o alvo estável. Repetido com movimento normal e reduzido: recolhe, reabre e mantém Música selecionada. Sete testes e build passaram após a correção.

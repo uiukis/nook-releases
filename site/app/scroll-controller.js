@@ -65,8 +65,9 @@ export function mountStory(){
  listen(home,'click',()=>document.querySelector('#chapter-music').scrollIntoView({behavior:reduced()?'instant':'smooth'}));
  document.querySelectorAll('[data-activate]').forEach(button=>listen(button,'click',()=>{document.querySelector('#chapter-'+button.dataset.activate).scrollIntoView({behavior:reduced()?'instant':'smooth'});if(active===button.dataset.activate)journey.open();}));
  const face=shell.querySelector('.closed-face');
+ // Keep the compact hit target in place until activation. Opening on pointerenter
+ // can put an iframe tab under the pending click and select it accidentally.
  listen(face,'click',()=>journey.open());
- listen(face,'pointerenter',()=>{if(active&&shell.dataset.phase==='idle')journey.open();});
  listen(window,'keydown',event=>{if(event.key==='Escape'&&shell.dataset.mode==='open'&&!document.querySelector('dialog[open]'))journey.close();});
  document.querySelectorAll('[data-command]').forEach(button=>listen(button,'click',()=>{const command=button.dataset.command;if(command==='toggle'){journey.close();return;}send(command);}));
  document.querySelectorAll('.scenario-buttons').forEach(group=>listen(group,'click',event=>{const button=event.target.closest('[data-scenario]');if(!button)return;const id=button.dataset.for;scenarios.set(id,button.dataset.scenario);activate(id);journey.go(id);showScreen(id);group.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));}));
