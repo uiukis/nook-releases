@@ -5,11 +5,12 @@ import { ArrowDown, ArrowRight, Apple, ChevronUp, Download, Monitor, Settings, X
 import features from './story-features.json';
 import { mountStory } from './scroll-controller';
 import { NibGlyph } from './nib';
+import introBrand from './intro-brand.json';
 
 const repo = 'https://github.com/uiukis/nook-releases';
 const moods = [['idle', 'De boa'], ['working', 'Trabalhando'], ['waiting', 'Esperando'], ['done', 'Prontinho'], ['sleeping', 'Descansando']];
 const chapterHints = [
-  ['Dá o play aí em cima.', 'Pode pausar, trocar de faixa e testar a letra.'],
+  ['Dá o play no Nook.', 'Pode pausar, trocar de faixa e testar a letra.'],
   ['Solta no notch.', 'Veja a Estante com arquivos, uma captura nova ou vazia.'],
   ['Uma olhada antes de continuar.', 'Teste como fica quando uma conta chega perto do limite.'],
   ['Tem alguém trabalhando.', 'Experimente quando o agente precisa de você.'],
@@ -24,8 +25,8 @@ function DownloadButton({children = 'Baixar a beta', className = 'button'}) {
   return <button type="button" className={className} data-download=""><Download size={19} aria-hidden="true" />{children}</button>;
 }
 
-function TopNotch({basePath}) {
-  return <aside className="scroll-notch" aria-label="Nook no topo da página" data-mode="closed" data-docked="false" data-presence="hidden" aria-hidden="true" inert><div className="notch-arrival">
+function TravelingNotch({basePath}) {
+  return <aside className="scroll-notch" aria-label="Demonstração do Nook" data-mode="closed" data-docked="false" data-presence="hidden" aria-hidden="true" inert><div className="notch-arrival">
     <svg className="notch-mask-defs" aria-hidden="true"><defs><clipPath id="nook-surface-clip" clipPathUnits="userSpaceOnUse"><path className="notch-outline" /></clipPath></defs></svg>
     <div className="notch-surface">
     <iframe className="demo-frame" src={basePath + '/preview/?embed=1#music'} title="Prévia interativa do recurso atual do Nook" inert aria-hidden="true" />
@@ -42,6 +43,7 @@ function TopNotch({basePath}) {
 function FeatureChapters() {
   return <section className="scroll-features" id="features" aria-label="Conheça os nove recursos do Nook">{features.map((feature, index) => <article className="feature-chapter" id={'chapter-' + feature.id} data-chapter={feature.id} aria-labelledby={'chapter-' + feature.id + '-title'} key={feature.id}>
     <div className="chapter-body shell"><div className="chapter-copy"><span className="chapter-label">{feature.label}</span><h2 id={'chapter-' + feature.id + '-title'}>{feature.title}</h2><p>{feature.text}</p></div>
+      <div className="chapter-dock" data-dock={feature.id} aria-hidden="true"><span className="dock-caption">{feature.label}, no seu ritmo.</span><span className="dock-note">Experimente os controles do Nook.</span></div>
       <div className="chapter-details"><span className="chapter-step">{index + 1} de {features.length}</span><p className="chapter-invitation">{chapterHints[index][0]}</p><p className="chapter-hint">{chapterHints[index][1]}</p>
         <div className="scenario-buttons" role="group" aria-label={'Situações de ' + feature.label}>{feature.states.map(([id, label]) => <button key={id} type="button" data-scenario={id} data-for={feature.id} aria-pressed={id === 'default'}>{label}</button>)}</div>
         <ul>{feature.details.map(detail => <li key={detail}>{detail}</li>)}</ul><p className="platform-note">{feature.win}</p>
@@ -65,19 +67,20 @@ export function Landing({releases, basePath}) {
   useEffect(() => mountStory(), []);
   return <>
     <div className="intro-overlay" aria-label="Abertura do Nook" data-intro-state="pending">
-      <video className="intro-video" muted playsInline preload="none" poster={basePath + '/motion/nook-intro-poster.jpg'} aria-label="O Nib sai da logo, dá tchau no N e pula direto para o k." data-src={basePath + '/motion/nook-intro.mp4'} />
+      <style dangerouslySetInnerHTML={{__html:introBrand.css}} />
+      <div className="intro-canvas" aria-hidden="true" dangerouslySetInnerHTML={{__html:introBrand.html}} />
       <button className="skip-intro" type="button">Pular abertura <ArrowRight size={16} aria-hidden="true" /></button>
     </div>
     <noscript><style>{'.intro-overlay{display:none!important}'}</style></noscript>
     <div className="nib-traveler" aria-hidden="true"><NibGlyph /></div>
-    <div className="site-content"><a className="skip" href="#features">Pular para os recursos</a><TopNotch basePath={basePath} /><div id="top" />
+    <div className="site-content"><a className="skip" href="#features">Pular para os recursos</a><TravelingNotch basePath={basePath} /><div id="top" />
       <header className="site-header shell"><a className="wordmark" href="#top" aria-label="Nook, início">Nook</a><nav aria-label="Navegação principal"><a href="#features">Recursos</a><a href="#platforms">Mac e Windows</a></nav><DownloadButton>Baixar beta</DownloadButton></header>
       <main>
         <section className="hero shell" aria-labelledby="hero-title">
           <div className="hero-copy"><h1 id="hero-title">Seu dia.<br />{' '}No seu<br /><span className="notch-word">notch.<i aria-hidden="true" /></span></h1><p>Música, arquivos e agentes de IA. Tudo perto, sem sair do que você está fazendo.</p>
             <div className="hero-actions"><DownloadButton /><a className="button button-outline" href="#features">Explorar recursos</a></div><div className="hero-compatibility"><span><Apple size={14} aria-hidden="true" />macOS</span><span><Monitor size={14} aria-hidden="true" />Windows</span></div>
           </div>
-          <div className="hero-nib-scene playground" id="playground"><p className="home-label">Esse é o Nib.</p><p className="home-heading">Pequeno.<br />Mas tá sempre<br />por perto.</p><div className="home-track" aria-hidden="true" /><div className="home-speech">Bora lá pra cima?</div><button type="button" className="nib-home" aria-label="Levar o Nib até o notch"><NibGlyph /></button><a className="scroll-invitation" href="#chapter-music"><span>Rola a página.<br />Eu vou junto.</span><ArrowDown size={20} aria-hidden="true" /></a><span className="home-note">Seu companheiro no Nook.</span></div>
+          <div className="hero-nib-scene playground" id="playground"><p className="home-label">Esse é o Nib.</p><p className="home-heading">Pequeno.<br />Mas tá sempre<br />por perto.</p><div className="home-track" aria-hidden="true" /><div className="home-speech">Bora dar uma volta?</div><button type="button" className="nib-home" aria-label="Levar o Nib até o notch"><NibGlyph /></button><a className="scroll-invitation" href="#chapter-music"><span>Rola a página.<br />Eu vou junto.</span><ArrowDown size={20} aria-hidden="true" /></a><span className="home-note">Seu companheiro no Nook.</span></div>
         </section>
         <FeatureChapters />
         <section className="nib-section shell" id="nib" aria-labelledby="nib-title"><div className="nib-room"><div className="nib-room-edge"><span>Codex está trabalhando</span><span className="tiny-nib"><NibGlyph /></span></div><div className="big-nib"><NibGlyph /></div><div className="nib-bubble" role="status">Pode deixar comigo.</div><div className="nib-shadow" /></div><div className="nib-copy"><h2 id="nib-title">Tem alguém<br />de olho.</h2><p>Esse é o Nib. Pequeno, discreto e com um jeito de contar que algo está acontecendo. Ele trabalha, espera por você e comemora quando termina.</p><div className="mood-buttons" role="group" aria-label="Humores do Nib">{moods.map(([id, label]) => <button key={id} type="button" data-mood={id} aria-pressed={id === 'idle'}>{label}</button>)}</div></div></section>

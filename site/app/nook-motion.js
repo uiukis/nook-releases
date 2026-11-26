@@ -65,16 +65,16 @@
  }
 
  function prepareAssembly(gsap,{header,copy,stage,home}){
-  gsap.set(header,{opacity:0,y:-14});gsap.set(copy,{opacity:0,clipPath:'inset(0% 100% 0% 0%)'});
-  gsap.set(stage,{opacity:0,clipPath:'inset(74% 10% 0% 70% round 29px)'});gsap.set(home,{opacity:0});
+  gsap.set(header,{opacity:0,y:-14});gsap.set(copy,{opacity:0,y:14});
+  gsap.set(stage,{opacity:0,y:18,scale:.98});gsap.set(home,{opacity:0});
  }
  function assemble(gsap,els,{from,target,scale}){
   const tl=gsap.timeline({paused:true});
   tl.set(els.traveler,{x:from.x,y:from.y,scale:96*scale/80,rotation:0,opacity:1,transformOrigin:'0 0'},0);
   if(els.video)tl.to(els.video,{opacity:0,duration:.16,ease:'power1.out'},0);
   if(els.overlay)tl.to(els.overlay,{opacity:0,duration:.35,ease:'power2.out'},.04);
-  tl.to(els.stage,{opacity:1,clipPath:'inset(0% 0% 0% 0% round 29px)',duration:.7,ease:'power3.inOut'},.08);
-  tl.to(els.copy,{opacity:1,clipPath:'inset(0% 0% 0% 0%)',duration:.55,ease:'power3.out'},.2);
+  tl.to(els.stage,{opacity:1,y:0,scale:1,duration:.48,ease:'power3.out'},.08);
+  tl.to(els.copy,{opacity:1,y:0,duration:.45,ease:'power3.out'},.16);
   tl.to(els.header,{opacity:1,y:0,duration:.4,ease:'power2.out'},.27);
   tl.to(els.traveler,{motionPath:{path:[from,{x:from.x+35,y:from.y-70},{x:target.left-35,y:target.top-50},{x:target.left,y:target.top}],curviness:1.05},scale:target.width/80,duration:.9,ease:'power2.inOut'},.02);
   return tl;
@@ -125,4 +125,5 @@
  const fill=(gsap,target)=>gsap.timeline({paused:true}).fromTo(target,{scaleX:.15,transformOrigin:'0 50%'},{scaleX:1,duration:.38,ease:'power2.out'});
  const spin=(gsap,target)=>gsap.timeline({paused:true}).fromTo(target,{rotation:0},{rotation:360,duration:1.7,ease:'none'});
  const toggle=(gsap,target,from,to)=>gsap.timeline({paused:true}).fromTo(target,{'--nook-switch':`${from}px`},{'--nook-switch':`${to}px`,duration:.25,ease:native.tabEase});
- export const NookMotion={flight,reveal,intro,brandIntro,prepareAssembly,assemble,fold,fade,hover,mood,native,outline,surface,arrival,tab,panel,press,select,fill,spin,toggle};
+ const travel=(gsap,target,to)=>gsap.timeline({paused:true}).to(target,{x:to.x,y:to.y,duration:.55,ease:'power3.inOut'});
+ export const NookMotion={flight,reveal,intro,brandIntro,prepareAssembly,assemble,fold,fade,hover,mood,native,outline,surface,arrival,tab,panel,press,select,fill,spin,toggle,travel};
