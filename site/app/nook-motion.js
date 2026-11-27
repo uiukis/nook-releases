@@ -128,17 +128,37 @@
  const spin=(gsap,target)=>gsap.timeline({paused:true}).fromTo(target,{rotation:0},{rotation:360,duration:1.7,ease:'none'});
  const toggle=(gsap,target,from,to)=>gsap.timeline({paused:true}).fromTo(target,{'--nook-switch':`${from}px`},{'--nook-switch':`${to}px`,duration:.25,ease:native.tabEase});
  const travel=(gsap,target,to)=>gsap.timeline({paused:true}).to(target,{x:to.x,y:to.y,duration:.55,ease:'power3.inOut'});
- function hop(gsap,actor,from,to,duration=.64){
+ function hop(gsap,actor,from,to,duration=.64,over){
   const dx=to.left-from.left,dy=to.top-from.top,arc=Math.min(120,Math.max(52,Math.abs(dx)*.16+Math.abs(dy)*.05));
   const tl=gsap.timeline({paused:true});
   tl.fromTo(actor,{x:from.left,y:from.top,scale:from.width/80,rotation:0,opacity:1,transformOrigin:'0 0'},
-   {motionPath:{path:[{x:from.left,y:from.top},{x:from.left+dx*.32,y:from.top+dy*.25-arc},{x:from.left+dx*.76,y:from.top+dy*.7-arc},{x:to.left,y:to.top}],curviness:.8},scale:to.width/80,duration,ease:'power1.inOut',immediateRender:false},0);
+   {motionPath:{path:over?[{x:from.left,y:from.top},over,{x:to.left,y:to.top}]:[{x:from.left,y:from.top},{x:from.left+dx*.32,y:from.top+dy*.25-arc},{x:from.left+dx*.76,y:from.top+dy*.7-arc},{x:to.left,y:to.top}],curviness:.8},scale:to.width/80,duration,ease:'power1.inOut',immediateRender:false},0);
   tl.to(actor,{rotation:dx<0?-9:9,duration:duration*.42,ease:'sine.out'},0);
   tl.to(actor,{rotation:0,duration:duration*.32,ease:'sine.inOut'},duration*.68);
   return tl;
  }
- function text(gsap,words){return gsap.timeline({paused:true}).fromTo(words,{y:14,opacity:0},{y:0,opacity:1,duration:.48,stagger:.035,ease:'power3.out'});}
- function handoff(gsap,actor,start,land,end){return gsap.timeline({paused:true}).set(actor,{x:start.left,y:start.top,scale:start.width/80,opacity:1,rotation:0,transformOrigin:'0 0'},0).add(hop(gsap,actor,start,land,.78).paused(false),0).to(actor,{x:end.left,y:end.top,scale:end.width/80,duration:.22,ease:native.openEase},.78).set(actor,{rotation:0},1);}
+ function text(gsap,words,side=0){return gsap.timeline({paused:true}).fromTo(words,{x:side,y:side?0:14,opacity:0},{x:0,y:0,opacity:1,duration:side?.66:.48,stagger:.035,ease:'power3.out'});}
+ // Small hops across the title, like the brand intro, then one long arc to the notch.
+ function bounce(gsap,actor,points,duration){
+  const weights=points.slice(1).map((_,i,rest)=>i===rest.length-1?2.6:1),total=weights.reduce((a,b)=>a+b,0);
+  const tl=gsap.timeline({paused:true});let at=0;
+  for(let i=1;i<points.length;i++){
+   const a=points[i-1],b=points[i],last=i===points.length-1,slot=duration*weights[i-1]/total,flight=last?slot:slot*.8;
+   const dx=b.left-a.left,arc=last?Math.min(130,Math.max(60,Math.abs(dx)*.14)):30+Math.min(24,Math.abs(dx)*.1);
+   const peak={x:a.left+dx*.5,y:Math.min(a.top,b.top)-arc};
+   tl.fromTo(actor,{x:a.left,y:a.top,scale:a.width/80,transformOrigin:'0 0'},{motionPath:{path:[{x:a.left,y:a.top},peak,{x:b.left,y:b.top}],curviness:1.1},scale:b.width/80,duration:flight,ease:last?'power1.inOut':'sine.inOut',immediateRender:false},at);
+   tl.to(actor,{rotation:dx<0?-10:10,duration:flight*.45,ease:'sine.out'},at).to(actor,{rotation:0,duration:flight*.4,ease:'sine.inOut'},at+flight*.6);
+   at+=slot;
+  }
+  return tl;
+ }
+ function handoff(gsap,actor,start,land,end,{landAt=.78,openAt=.78,over,hops}={}){
+  return gsap.timeline({paused:true})
+   .set(actor,{x:start.left,y:start.top,scale:start.width/80,opacity:1,rotation:0,transformOrigin:'0 0'},0)
+   .add((hops?.length?bounce(gsap,actor,[start,...hops,land],landAt):hop(gsap,actor,start,land,landAt,over)).paused(false),0)
+   .to(actor,{x:end.left,y:end.top,scale:end.width/80,duration:1-openAt,ease:native.openEase},openAt)
+   .set(actor,{rotation:0},1);
+ }
  function companion(gsap,{character,shadow,particles,bar},mood){
   const tl=gsap.timeline({paused:true});tl.set(character,{x:0,y:0,scale:1,rotation:0},0);tl.set(particles,{x:0,y:0,opacity:0,rotation:0},0);
   tl.fromTo(bar,{scaleX:mood==='done'?1:.18},{scaleX:mood==='sleeping'?.12:1,duration:mood==='working'?1.3:.45,ease:'power2.out'},0);

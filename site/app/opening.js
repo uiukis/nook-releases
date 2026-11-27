@@ -26,7 +26,7 @@ export function runIntro({gsap,home,traveler,reduced,onDone,textMotion}) {
     const scale=viewportScale();
     const from={x:(innerWidth-width*scale)/2+landing.x*scale,y:(innerHeight-height*scale)/2+landing.y*scale};
     assembly=NookMotion.assemble(gsap,elements,{from,target,scale});
-    assembly.timeScale(1.3).eventCallback('onComplete',complete).play(0);
+    assembly.timeScale(.9).eventCallback('onComplete',complete).play(0);
   }
   const skipIntro=()=>{assembly?.kill();finish(false);if(document.body.dataset.intro==='assembling'){gsap.set(['.site-header','.hero-copy','.hero-nib-scene'],{clearProps:'opacity,transform,clipPath'});complete();}};
   const key=event=>{if(event.key==='Escape'&&document.body.dataset.intro!=='done'){event.preventDefault();skipIntro();}};
@@ -40,8 +40,8 @@ export function runIntro({gsap,home,traveler,reduced,onDone,textMotion}) {
     document.body.dataset.intro='preparing';overlay.dataset.introState='preparing';
     canvas.style.setProperty('--intro-scale',viewportScale());
     context.add(()=>{NookMotion.prepareAssembly(gsap,elements);brand=NookMotion.brandIntro(gsap);brand.call(()=>finish(true),null,NookMotion.intro.duration);});
-    timer=setTimeout(skipIntro,3000);
-    document.fonts.ready.then(()=>{if(!disposed&&!finished){gsap.set('.hero-nib-scene',{y:0,scale:1});homeTarget=home.getBoundingClientRect();gsap.set('.hero-nib-scene',{y:18,scale:.98});document.body.dataset.intro='playing';overlay.dataset.introState='playing';brand.play(0);}});
+    timer=setTimeout(skipIntro,5200);
+    document.fonts.ready.then(()=>{if(!disposed&&!finished){gsap.set('.hero-nib-scene',{y:0,scale:1});homeTarget=home.getBoundingClientRect();gsap.set('.hero-nib-scene',{y:18,scale:.98});document.body.dataset.intro='playing';overlay.dataset.introState='playing';brand.timeScale(.72).play(0);}});
   }
   return ()=>{
     disposed=true;clearTimeout(timer);assembly?.kill();brand?.kill();context.revert();

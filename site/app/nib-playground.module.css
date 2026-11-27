@@ -1,0 +1,116 @@
+.scene.scene {
+  --stage-ink: #2b2039;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(155px, 1fr) auto auto;
+  gap: clamp(10px, 1.4vw, 20px);
+  height: auto;
+  min-height: clamp(420px, 37vw, 560px);
+  padding: clamp(19px, 3vw, 44px);
+  background: radial-gradient(ellipse at 78% 65%, #eee4ff 0, transparent 54%), #d8c4f4;
+  color: var(--stage-ink);
+}
+.heading h2 {
+  font-family: Bricolage, Instrument, sans-serif;
+  font-size: clamp(30px, 3.5vw, 56px);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.heading p { margin-top: 9px; color: #554567; font-size: clamp(13px, 1.2vw, 17px); }
+.stage { position: relative; isolation: isolate; min-width: 0; }
+.notch {
+  position: absolute;
+  inset: 4% 0 auto;
+  max-width: 460px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 7px 7px 19px 19px;
+  background: #211929;
+  color: #faf5ff;
+  box-shadow: 0 12px 30px #37234e30, inset 0 1px #ffffff1a;
+}
+.signal { display: grid; place-items: center; width: 29px; height: 29px; color: #e3cbff; }
+.notchCopy, .quota { display: grid; line-height: 1.25; gap: 3px; }
+.notchCopy strong, .quota strong { font-size: 13px; }
+.notchCopy small, .quota small { font-size: 10px; color: #cdc1d9; }
+.quota { text-align: right; font-variant-numeric: tabular-nums; color: #bfe8ce; }
+.scene[data-scene="quota"] .quota, .scene[data-scene="done"] .quota { color: #ffb8bd; }
+.scene[data-scene="done"] .signal { color: #bfe8ce; }
+.track { position: absolute; inset: auto 0 12px; border-top: 1px solid #4b33602b; }
+.scene .speech {
+  display: block;
+  left: auto;
+  right: calc(8% + clamp(57px, 7vw, 95px));
+  bottom: 29px;
+  max-width: 60%;
+  padding: 8px 10px;
+  color: #39264d;
+  background: #f7efff;
+  border: 1px solid #563f6d24;
+  border-radius: 12px;
+  white-space: normal;
+  line-height: 1.3;
+}
+.speech > span { display: block; animation: speech-in 260ms ease-out both; }
+.scene .speech::after {
+  left: auto;
+  right: -4px;
+  top: calc(50% - 4px);
+  bottom: auto;
+  width: 8px;
+  height: 8px;
+  border: solid #563f6d24;
+  border-width: 1px 1px 0 0;
+}
+.scene .nibHome {
+  left: auto;
+  right: 4%;
+  bottom: 10px;
+  width: clamp(57px, 7vw, 95px);
+  height: clamp(57px, 7vw, 95px);
+}
+.pose, .pose > span, .pose svg { display: block; width: 100%; height: 100%; }
+.pose svg g { transform: translate(var(--look-x, 0px), var(--look-y, 0px)); transition: transform 140ms ease-out; }
+.pose[data-animated="true"] { animation: nib-hop 530ms cubic-bezier(.22,.71,.24,1); }
+.scene[data-scene="quota"] .pose[data-animated="true"] { animation-name: nib-startle; }
+.controls { display: flex; flex-wrap: wrap; gap: 6px; }
+.controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 6px 9px;
+  border: 1px solid #57406a42;
+  border-radius: 9px;
+  background: #fbf6ff66;
+  font-size: 12px;
+  font-weight: 650;
+}
+.controls button:hover { background: #fbf6ff; }
+.controls button[aria-pressed="true"] { color: #fbf6ff; background: #3d2c4f; border-color: #3d2c4f; }
+.next { display: inline-flex; align-items: center; justify-self: start; gap: 9px; min-height: 36px; font-size: 13px; font-weight: 650; }
+.next:hover { text-decoration: underline; text-underline-offset: 4px; }
+.controls button:focus-visible, .next:focus-visible { outline-color: #40285d; }
+@keyframes speech-in { from { translate: 0 5px; scale: .96; } }
+@keyframes nib-hop { 35% { transform: translateY(-14px) rotate(-7deg); } 70% { transform: translateY(2px) scale(1.08,.93); } }
+@keyframes nib-startle { 28% { transform: translateY(-9px) rotate(6deg); } 57% { transform: rotate(-7deg); } 81% { transform: rotate(3deg); } }
+@media (max-width: 760px) {
+  .scene.scene { min-height: 380px; }
+  .controls button { min-height: 44px; }
+  .next { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene .speech > span, .scene .pose[data-animated="true"], .scene[data-scene="quota"] .pose[data-animated="true"] { animation: none; }
+  .pose svg g { transform: none; transition: none; }
+}
+:global(html[data-reduce-motion]) .scene .speech > span,
+:global(html[data-reduce-motion]) .scene .pose[data-animated="true"] { animation: none; }
+:global(html[data-reduce-motion]) .pose svg g { transform: none; transition: none; }
+@media (max-width: 430px) {
+  .controls button { padding-inline: 6px; gap: 4px; font-size: 11px; }
+  .controls svg { width: 13px; height: 13px; }
+}
