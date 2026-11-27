@@ -13,6 +13,9 @@ export function mountStory(){
  const frame=document.querySelector('.demo-frame'),shell=document.querySelector('.scroll-notch');
  const home=document.querySelector('.nib-home'),traveler=document.querySelector('.nib-traveler');
  const story=document.querySelector('.scroll-features');
+ // The chapter nav only fades out, so take its links out of the tab order too.
+ const chapterNav=document.querySelector('.chapter-nav');
+ chapterNav.inert=true;cleanup.push(()=>{chapterNav.inert=false;});
  const chapters=[...document.querySelectorAll('[data-chapter]')],links=[...document.querySelectorAll('[data-chapter-link]')];
  const media=matchMedia('(prefers-reduced-motion: reduce)');
  const forcedReduced=new URLSearchParams(location.search).has('reduce-motion');
@@ -49,6 +52,7 @@ export function mountStory(){
   const hadActive=Boolean(active);active=id;document.body.dataset.activeChapter=id||'';
   document.body.classList.toggle('in-chapters',Boolean(id));
   if(hadActive!==Boolean(id)){navMotion?.kill();navMotion=NookMotion.fade(gsap,document.querySelector('.chapter-nav'),hadActive?1:0,id?1:0);if(reduced())navMotion.progress(1);else navMotion.play(0);}
+  chapterNav.inert=!id;
   links.forEach(link=>{if(link.dataset.chapterLink===id)link.setAttribute('aria-current','true');else link.removeAttribute('aria-current');});
   if(!id)return;
 
@@ -65,7 +69,7 @@ export function mountStory(){
   // Sections after the chapters sit between two stops; drop the chapter nav before
   // their content reaches it (their top padding, about 70px, is still empty).
   // The nav has no box on small screens, where half the screen is the limit.
-  const clear=Math.max(innerHeight*.5,document.querySelector('.chapter-nav').getBoundingClientRect().bottom-70);
+  const clear=Math.max(innerHeight*.5,chapterNav.getBoundingClientRect().bottom-70);
   activate(byId.has(shown)&&story.getBoundingClientRect().bottom>clear?shown:null);
   if(arrival&&arriving!==shown){
    arrival.kill();arrival=null;arriving=null;
