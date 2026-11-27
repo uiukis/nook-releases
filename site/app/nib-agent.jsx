@@ -37,6 +37,8 @@ export function NibAgent() {
   const timer = useRef(0);
   const nap = useRef(0);
   const stage = useRef(null);
+  const allow = useRef(null);
+  const starter = useRef(null);
 
   // Nib dozes off after a quiet while and wakes when the pointer comes back.
   function stayAwake() {
@@ -63,6 +65,14 @@ export function NibAgent() {
   const low = remaining <= 20;
   const askNow = phase === 'waiting' && task?.ask;
 
+  // Offer the keyboard the answer only while the visitor is still here: never pull
+  // the page back to the card or take focus from somewhere else.
+  useEffect(() => {
+    if (!askNow || !stage.current.parentElement.contains(document.activeElement)) return;
+    const box = stage.current.getBoundingClientRect();
+    if (box.bottom > 0 && box.top < window.innerHeight) allow.current.focus({ preventScroll: true });
+  }, [askNow]);
+
   // Advance the script one step at a time. Permission and completion pause it.
   useEffect(() => {
     if (phase !== 'working' || !task) return undefined;
@@ -82,15 +92,18 @@ export function NibAgent() {
     return () => window.clearTimeout(timer.current);
   }, [phase, step, task]);
 
-  function start(choice) {
+  function start(choice, button) {
     if (phase === 'working' || phase === 'waiting' || remaining <= 0) return;
     stayAwake();
+    starter.current = button;
     setTask({ ...choice, asked: false });
     setStep(0);
     setPhase('working');
     setKick(value => value + 1);
   }
   function answer(allowed) {
+    // The card is about to unmount; hand focus back to the task that opened it.
+    starter.current?.focus({ preventScroll: true });
     setKick(value => value + 1);
     if (allowed) setPhase('working');
     else {
@@ -159,7 +172,7 @@ export function NibAgent() {
         <span className={styles.askIcon}><ShieldCheck size={18} aria-hidden="true" /></span>
         <div><strong>{task.ask.text}</strong><small>{task.ask.detail}</small></div>
         <button type="button" className={styles.deny} onClick={() => answer(false)}><X size={14} aria-hidden="true" />Negar</button>
-        <button type="button" className={styles.allow} onClick={() => answer(true)} autoFocus><Check size={14} aria-hidden="true" />Permitir</button>
+        <button type="button" className={styles.allow} onClick={() => answer(true)} ref={allow}><Check size={14} aria-hidden="true" />Permitir</button>
       </div> : null}
 
       {history.length ? <ul className={styles.history} aria-label="Tarefas recentes">
@@ -174,7 +187,7 @@ export function NibAgent() {
 
     <div className={styles.controls}>
       <div className={styles.tasks} role="group" aria-label="Tarefas para pedir ao agente">
-        {tasks.map(item => <button key={item.id} type="button" disabled={busy || remaining <= 0} onClick={() => start(item)}>
+        {tasks.map(item => <button key={item.id} type="button" aria-disabled={busy || remaining <= 0} onClick={event => start(item, event.currentTarget)}>
           <Play size={13} aria-hidden="true" />{item.label}
         </button>)}
       </div>

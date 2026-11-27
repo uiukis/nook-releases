@@ -133,7 +133,8 @@
 
 .speech {
   position: absolute;
-  right: clamp(96px, 14%, 130px);
+  /* Clear of Nib: its inset, its width and room for the tail. */
+  right: calc(24px + clamp(64px, 8vw, 92px) + 8px);
   bottom: 38px;
   max-width: 44%;
   padding: 8px 11px;
@@ -187,8 +188,9 @@
   font-weight: 650;
   cursor: pointer;
 }
-.tasks button:hover:not(:disabled) { background: var(--selected); border-color: var(--active-border); }
-.tasks button:disabled { cursor: not-allowed; opacity: .45; }
+.tasks button:hover:not([aria-disabled="true"]) { background: var(--selected); border-color: var(--active-border); }
+/* aria-disabled rather than disabled, so a running task keeps keyboard focus. */
+.tasks button[aria-disabled="true"] { cursor: not-allowed; opacity: .45; }
 .meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
 .meta span { display: inline-flex; align-items: center; gap: 6px; }
 .meta button { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 8px; border: 0; background: none; color: var(--accent); font-size: 12px; font-weight: 650; cursor: pointer; }
@@ -211,12 +213,21 @@
   .section.section { grid-template-columns: 1fr; grid-template-areas: 'copy' 'stage' 'controls'; row-gap: 22px; }
   .copy p { font-size: 16px; }
   .stage { min-height: 420px; }
-  .speech { right: 112px; max-width: 40%; }
+  .speech { max-width: 40%; }
 }
 @media (max-width: 480px) {
   .ask { grid-template-columns: auto minmax(0, 1fr); }
   .ask button { grid-column: span 1; justify-content: center; }
-  .stage { padding-inline: 12px; }
+  .stage { padding-inline: 12px; min-height: 490px; }
+  /* No room beside Nib without covering the history, so speak from above. */
+  .speech { right: 20px; bottom: 94px; }
+  .history { max-width: 42%; }
+  .speech::after { top: auto; right: 28px; bottom: -4px; }
+}
+@media (max-width: 360px) {
+  /* History labels wrap this narrow, so the speech has to sit above them. */
+  .stage { min-height: 530px; }
+  .speech { bottom: 134px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .stage *, .stage { animation: none !important; transition: none !important; }
