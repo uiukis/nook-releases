@@ -82,3 +82,5 @@ html[data-reduce-motion] .closed-levels i { animation: none; }
 
 /* The dock is empty until Nib arrives. Keep its keyboard shortcut visible on focus. */
 .chapter-dock[data-live="false"] .dock-notch:not(:focus-visible) { opacity: 0; pointer-events: none; }
+/* Title letters wait off to the side; clip them here, since clipping html alone still lets the page pan. */
+.scroll-features { overflow-x: clip; }
