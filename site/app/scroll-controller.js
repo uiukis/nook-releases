@@ -16,6 +16,15 @@ export function mountStory(){
  // The chapter nav only fades out, so take its links out of the tab order too.
  const chapterNav=document.querySelector('.chapter-nav');
  chapterNav.inert=true;cleanup.push(()=>{chapterNav.inert=false;});
+ const nextButton=document.querySelector('.mobile-chapter-next');
+ // Names the chapter on screen and jumps to what follows it.
+ function showNext(id){
+  const {index,label}=byId.get(id),next=features[index+1];
+  nextButton.querySelector('.mobile-chapter-label').textContent=label;
+  nextButton.querySelector('.mobile-chapter-count').textContent=`${index+1} / ${features.length}`;
+  nextButton.href=next?'#chapter-'+next.id:'#agente';
+  nextButton.setAttribute('aria-label',`${label}, ${index+1} de ${features.length}. ${next?'Ir para '+next.label:'Ir para Agentes de IA'}`);
+ }
  const chapters=[...document.querySelectorAll('[data-chapter]')],links=[...document.querySelectorAll('[data-chapter-link]')];
  const media=matchMedia('(prefers-reduced-motion: reduce)');
  const forcedReduced=new URLSearchParams(location.search).has('reduce-motion');
@@ -54,8 +63,7 @@ export function mountStory(){
   if(hadActive!==Boolean(id)){navMotion?.kill();navMotion=NookMotion.fade(gsap,document.querySelector('.chapter-nav'),hadActive?1:0,id?1:0);if(reduced())navMotion.progress(1);else navMotion.play(0);}
   chapterNav.inert=!id;
   links.forEach(link=>{if(link.dataset.chapterLink===id)link.setAttribute('aria-current','true');else link.removeAttribute('aria-current');});
-  if(!id)return;
-
+  if(id)showNext(id);
  }
  let presented=null,arrival=null,arriving=null;const seen=new Set();
  function readScroll(){
