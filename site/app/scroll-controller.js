@@ -62,7 +62,12 @@ export function mountStory(){
   const from=stops[end-1],to=stops[end];
   const shown=position<(from.y+to.y)/2?from.id:to.id;
   activate(byId.has(shown)?shown:null);
-  if(arrival&&arriving!==shown){arrival.kill();arrival=null;arriving=null;journey.home();}
+  if(arrival&&arriving!==shown){
+   arrival.kill();arrival=null;arriving=null;
+   // The cut-off flight left the notch hidden: restore the dock being returned to,
+   // otherwise forget it so that coming back later plays the arrival again.
+   if(shown===presented)journey.go(presented);else{journey.home();presented=null;}
+  }
   if(presented===shown||arriving===shown)return;
   if(reduced()||!byId.has(shown)){journey.go(shown);presented=shown;return;}
 

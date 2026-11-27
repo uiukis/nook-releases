@@ -29,7 +29,9 @@ export function createNibJourney({gsap,root,home,traveler,reduced,onScreen,onVis
   if(changed)document.dispatchEvent(new CustomEvent('nook-nib-location',{detail:location}));
  }
  function mode(open){root.dataset.mode=open?'open':'closed';face.inert=open;face.setAttribute('aria-expanded',String(open));frame.inert=!open;frame.setAttribute('aria-hidden',String(!open));resident.tabIndex=open?0:-1;root.querySelectorAll('.notch-tools button').forEach(button=>button.tabIndex=open?0:-1);}
- function hidden(){root.dataset.presence='hidden';root.inert=true;root.setAttribute('aria-hidden','true');onVisibility(false);docks.forEach(node=>{node.dataset.live='false';node.querySelector('.dock-notch').inert=false;});}
+ // The notch is positioned in document coordinates, so even while invisible a stale
+ // position stretches the page. Park it at the origin; surfaceAt places it again.
+ function hidden(){surfaceSeek?.kill();surfaceSeek=null;gsap.set(root,{x:0,y:0});root.dataset.presence='hidden';root.inert=true;root.setAttribute('aria-hidden','true');onVisibility(false);docks.forEach(node=>{node.dataset.live='false';node.querySelector('.dock-notch').inert=false;});}
  function overlayGeometry(){const b=root.getBoundingClientRect();root.style.setProperty('--overlay-left',-b.left+'px');root.style.setProperty('--overlay-top',-b.top+'px');root.style.setProperty('--overlay-width',document.documentElement.clientWidth+'px');root.style.setProperty('--overlay-height',innerHeight+'px');}
  function surfaceAt(id,progress){
   if(occupied!==id||!surfaceSeek){
@@ -99,7 +101,19 @@ export function createNibJourney({gsap,root,home,traveler,reduced,onScreen,onVis
  function park(){if(place==='companion')return;go('companion');}
  function open(){if(flying&&root.dataset.phase==='preview'){flying=false;root.dataset.phase='idle';}if(!occupied||flying)return;manualClosed=null;routeKey=null;signature=null;surfaceSeek?.kill();surfaceSeek=null;interaction?.kill();mode(true);root.inert=false;root.dataset.animating='true';interaction=NookMotion.surface(gsap,model(),true).eventCallback('onComplete',()=>{root.dataset.animating='false';actors();});if(reduced())interaction.progress(1);else interaction.play(0);actors();}
  function close(){if(!occupied||flying)return;manualClosed=occupied;routeKey=null;signature=null;surfaceSeek?.kill();surfaceSeek=null;interaction?.kill();mode(false);root.dataset.animating='true';interaction=NookMotion.surface(gsap,model(),false).eventCallback('onComplete',()=>root.dataset.animating='false');if(reduced())interaction.progress(1);else interaction.play(0);actors();}
- function resize(){measure();}
+ // Docks move when the layout reflows, and no scroll event may follow to correct it.
+ function resize(){
+  measure();
+  if(flying)return;
+  // The intro owns the traveler until it finishes.
+  if(document.body.dataset.intro==='done')gsap.set(traveler,{x:0,y:0});
+  if(place!=='notch'||!occupied)return;
+  const p=geometry(occupied),open=root.dataset.mode==='open';
+  gsap.set(root,{x:p.left,y:p.top});
+  // Rebuild the outline in place: going through onScreen would reset the demo's tab.
+  NookMotion.surface(gsap,model(),false).progress(1);surfaceSeek=NookMotion.surface(gsap,model(),true);surfaceSeek.progress(open?1:0,true);
+  root.dataset.animating='false';overlayGeometry();onVisibility(open);actors();
+ }
  function dispose(){disposed=true;route?.kill();surfaceSeek?.kill();interaction?.kill();hidden();gsap.set([traveler,resident,closedNib,companion],{opacity:0});gsap.set(home,{opacity:1});}
  measure();return {seek,stops,go,home:()=>endpoint('home'),park,open,close,resize,overlayGeometry,dispose};
 }
