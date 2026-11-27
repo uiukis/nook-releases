@@ -12,7 +12,7 @@ A versão atual implementa notches estacionários nas nove seções. A rolagem �
 
 A área final agora é “Seu dia tem companhia”: o Nib chega ampliado, acompanha uma atividade fictícia e reage a cinco humores. Os títulos entram por grupos de palavras, com uma subida discreta. Os spans dos títulos são renderizados pelo próprio React; não troque seus nós de texto em efeitos.
 
-A abertura tem 2 s de marca e aproximadamente 0,71 s de montagem. Foi medida em 2667 ms no navegador. O usuário exigiu não ultrapassar 3 s: mantenha o limite global de 3000 ms, incluindo espera por fontes e montagem. O Nib sai da logo, dá tchau no N e salta diretamente para o k.
+A abertura toca a marca a 0,72x (cerca de 2,8 s) e depois a montagem. Em 27/11/2026 o usuário decidiu manter essa versão mais lenta, o que substitui o limite anterior de 3 s: o limite global agora é de 5200 ms, incluindo espera por fontes e montagem. A duração real dessa versão ainda não foi medida em um build de produção; as medições de cerca de 2,7 s citadas abaixo e em site/nook-intro/REVIEW.md são da versão anterior. O Nib sai da logo, dá tchau no N e salta diretamente para o k.
 
 Foi corrigido um erro de hidratação reportado em screenshot: Dark Reader inseria atributos data-darkreader-* no SVG bruto antes do React. IntroCanvas monta o SVG após a hidratação usando useLayoutEffect; o HTML inicial da área fica vazio. A página e o iframe incluem meta darkreader-lock porque já têm tema próprio. Não use suppressHydrationWarning para esconder a divergência. Revalide com a extensão real após recarregar a página.
 
@@ -31,7 +31,7 @@ O aplicativo nativo é desenvolvido em outro repositório privado. Este reposit�
 - site/app/nook-motion.js: marca, handoff, texto e reações compartilhadas com HyperFrames.
 - site/app/text-motion.js: IntersectionObserver e revelação dos títulos.
 - site/app/landing.jsx e site/app/native-motion.css: apresentação, notches e área de companhia.
-- site/app/opening.js: abertura, montagem e limite de três segundos.
+- site/app/opening.js: abertura, montagem e limite global de 5200 ms.
 - site/app/product-motion.js: controles e transições da simulação nativa.
 - site/nook-intro/: composição HyperFrames editável e revisão atual.
 
