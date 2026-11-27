@@ -12,6 +12,7 @@ export function mountStory(){
  const byId=new Map(features.map((feature,index)=>[feature.id,{...feature,index}]));
  const frame=document.querySelector('.demo-frame'),shell=document.querySelector('.scroll-notch');
  const home=document.querySelector('.nib-home'),traveler=document.querySelector('.nib-traveler');
+ const story=document.querySelector('.scroll-features');
  const chapters=[...document.querySelectorAll('[data-chapter]')],links=[...document.querySelectorAll('[data-chapter-link]')];
  const media=matchMedia('(prefers-reduced-motion: reduce)');
  const forcedReduced=new URLSearchParams(location.search).has('reduce-motion');
@@ -61,7 +62,11 @@ export function mountStory(){
   const end=index<0?stops.length-1:index;
   const from=stops[end-1],to=stops[end];
   const shown=position<(from.y+to.y)/2?from.id:to.id;
-  activate(byId.has(shown)?shown:null);
+  // Sections after the chapters sit between two stops; drop the chapter nav before
+  // their content reaches it (their top padding, about 70px, is still empty).
+  // The nav has no box on small screens, where half the screen is the limit.
+  const clear=Math.max(innerHeight*.5,document.querySelector('.chapter-nav').getBoundingClientRect().bottom-70);
+  activate(byId.has(shown)&&story.getBoundingClientRect().bottom>clear?shown:null);
   if(arrival&&arriving!==shown){
    arrival.kill();arrival=null;arriving=null;
    // The cut-off flight left the notch hidden: restore the dock being returned to,
